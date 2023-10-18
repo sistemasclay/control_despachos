@@ -1,0 +1,235 @@
+@charset "utf-8";
+/* jm - eiso */
+
+* {
+	outline: none;
+	margin: 0;
+	padding: 0;
+	
+}
+
+body {
+	/*background-color: #4B4B4B;*/
+	background-image: url(../imgs/textura_fondo.jpg);
+}
+
+#contenedor {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+}
+#maquinas {
+	position: absolute;
+	height: 95%;
+	width: 100%;
+}
+#mensajes {
+	position: absolute;
+	height: 5%;
+	width: 100%;
+}
+.verde{
+	background: #00FF00;
+	color: #000;
+}
+
+.rojo{
+	background: #FF0000;
+	color: #FFF;
+}
+.noparo{
+	color: #0F0;
+}
+.div1{
+	font: 400% "calibri";
+	text-align: center;
+	height: 100%;
+	width: 100%;
+    box-sizing:border-box;
+	border: 5px solid black;
+	border-radius: 3%;
+}
+
+.div2{
+	font: 450% "calibri";
+	text-align: center;
+	height: 100%;
+	width: 49.5%;
+	display: inline-block;
+    box-sizing:border-box;
+	border: 5px solid black;
+	border-radius: 3%;
+}
+
+.div3{
+	font: 350% "calibri";
+	text-align: center;
+	height: 100%;
+	width: 33%;
+	display: inline-block;
+    box-sizing:border-box;
+	border: 5px solid black;
+	border-radius: 3%;
+	
+}
+
+.div4{
+	font: 300% "calibri";
+	text-align: center;
+	height: 49.5%;
+	width: 49.5%;
+	display: inline-block;
+	border-style: solid;
+    box-sizing:border-box;
+	border: 5px solid black;
+	border-radius: 3%;
+}
+
+.div6{
+	font: 250% "calibri";
+	text-align: center;
+	height: 49.5%;
+	width: 33%;
+	display: inline-block;
+	border-style: solid;
+    box-sizing:border-box;
+	border: 5px solid black;
+	border-radius: 3%;
+}
+.div8{
+	font: 250% "calibri";
+	text-align: center;
+	height: 49.5%;
+	width: 24.7%;
+	display: inline-block;
+	border-style: solid;
+    box-sizing:border-box;
+	border: 5px solid black;
+	border-radius: 3%;
+}
+.div1 #titulo {
+	height: 20%;
+	width: 100%;
+	overflow: hidden;
+}
+.div1 #datos{
+	height: 50%;
+	width: 100%;
+	font: 150% "calibri";
+}
+.div1 #parada{
+	height: 30%;
+	width: 100%;
+	overflow: hidden;
+}
+.div2 #titulo {
+	height: 20%;
+	width: 100%;
+	overflow: hidden;
+}
+.div2 #datos{
+	height: 50%;
+	width: 100%;
+	font: 150% "calibri";
+}
+.div2 #parada{
+	height: 30%;
+	width: 100%;
+	overflow: hidden;
+}
+.div3 #titulo {
+	height: 25%;
+	width: 100%;
+	overflow: hidden;
+	font: 120% "calibri";
+}
+.div3 #datos{
+	height: 45%;
+	width: 100%;
+	font: 150% "calibri";
+}
+.div3 #parada{
+	height: 30%;
+	width: 100%;
+	overflow: hidden;
+}
+.div4 #titulo {
+	height: 23%;
+	width: 100%;
+	overflow: hidden;
+}
+.div4 #datos{
+	height: 47%;
+	width: 100%;
+	font: 130% "calibri";
+}
+.div4 #parada{
+	height: 30%;
+	width: 100%;
+	overflow: hidden;
+}
+.div6 #titulo {
+	height: 20%;
+	width: 100%;
+	font: 120% "calibri";
+	overflow: hidden;
+}
+.div6 #datos{
+	height: 45%;
+	width: 100%;
+	font: 150% "calibri";
+}
+.div6 #parada{
+	height: 35%;
+	width: 100%;
+	overflow: hidden;
+}
+.div8 #titulo {
+	height: 20%;
+	width: 100%;
+	overflow: hidden;
+}
+.div8 #datos{
+	height: 30%;
+	width: 100%;
+}
+.div8 #parada{
+	height: 50%;
+	width: 100%;
+	overflow: hidden;
+}
+.titulo{
+	width: 100%;
+	height: 20%;
+	text-align: center;
+	font: 650% "calibri light";
+	color: #FF0000;
+}
+.ranking{
+	width: 100%;
+	height: 80%;
+	text-align: left;
+	font: 200% "calibri";
+	color: #FFFFFF;
+}
+.rank{
+	margin: 0 auto;
+	width: 100%;
+	text-align: center;
+}
+.rank th{
+	font: 200% "calibri light";
+	color: red;
+}
+.rank td{
+	font: 130% "calibri light";
+}
+.pos{
+	width: 20%;
+}
+.maquina{
+	width: 60%;
+}
+.oee{
+	width: 20%;
+}

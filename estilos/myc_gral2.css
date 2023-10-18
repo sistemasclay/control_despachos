@@ -1,0 +1,841 @@
+@charset "utf-8";
+/* jm - eiso */
+
+* {
+	outline: none;
+	margin: 0;
+	padding: 0;
+	
+}
+
+body {
+	background-color: #FFFFFF;
+	/*background-image: url(../imgs/textura_fondo.jpg);*/
+}
+
+h1 {
+	font: 30px "calibri";
+	color: #00adb5;
+	text-align: center;
+	font-weight: bold;
+	text-shadow: 2px 2px 40px #fff;
+}
+
+h2 {
+	font: 20px "calibri";
+	color: #00adb5;
+	text-align: center;
+	font-weight: bold;
+	text-shadow: 2px 2px 50px #FFF;
+}
+
+h3{
+	font: 40px "calibri";
+	color: #00adb5;
+	text-align: center;
+	font-weight: bold;
+}
+
+span{
+	color: #fff;
+}
+a{
+	color: #fff;
+	text-decoration: none;
+}
+
+#contenedor {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+}
+
+#menuppal {
+	position: relative;
+	float: left;
+	top: 15px;
+	/*width: 1000px;*/
+	width: 75%;
+}
+
+#menuppal ul li {
+	float: left;
+	margin-right: 10px;
+	list-style: none;
+	text-align: center;
+/* ESTE ATRIBUTO AFECTA EL ESPACIO EN LAS IMAGENES DEL MENU PRINCIPAL */
+/* ENTRE MAS IMAGENES HAYA MAS PEQUEÑO DEBE IR EL NUMERO */
+	width: 7%;
+}
+
+#menuppal ul li a:link, #menuppal ul li a:visited {
+	height: 75px;
+	width: 70px;
+	padding-top: 15px;
+	display: block;
+	font: 11px "arial";
+	color: #000;
+	line-height: 12px;
+	text-decoration: none;
+	text-align: center;
+	vertical-align: text-top;
+}
+
+#menuppal ul li a:hover {
+	color: #c00;
+}
+
+#menuppal ul li a img {
+	margin-bottom: 5px;
+	border: 0;
+}
+
+#pantalla{
+	position: relative;
+	height: 76%;
+	width: 100%;
+	color: white;
+	background-image: url(../imgs/fondo_40.jpg);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: auto 200%;
+	
+}
+
+#titulo{
+	position: relative;
+	height: 30%;
+	width: 100%;
+}
+
+#contenido {
+	position: relative;
+	height: 70%;
+	width: 100%;
+	overflow: scroll;
+	overflow-X: auto;
+	overflow-Y: auto;
+}
+
+#datos {
+	position: relative;
+	height: 98%;
+	width: 28%;
+	overflow: scroll;
+	overflow-X: auto;
+	overflow-Y: auto;
+	display: inline-block;
+}
+
+#lista {
+	position: relative;
+	height: 98%;
+	width: 70%;
+	overflow: scroll;
+	overflow-X: auto;
+	overflow-Y: auto;
+	display: inline-block;
+}
+
+#cotizaciones {
+	position: relative;
+	height: 98%;
+	width: 98%;
+	overflow: scroll;
+	overflow-X: auto;
+	overflow-Y: auto;
+	display: inline-block;
+}
+
+#plantilla{
+	position: relative;
+	height: 63%;
+	width: 100%;
+	overflow: scroll;
+	overflow-X: auto;
+	overflow-Y: auto;
+}
+/************************/
+/**CABECERA**/
+/************************/
+#cabecera {
+	height: 15%;
+	width: 100%;
+	background-color: #EFEFEF;
+	display: inline-block;
+}
+
+#contenedor_logo{
+	width: 20%;
+	height: 100%;
+	float:left;
+}
+
+#sis_name{
+	position: relative;
+	width: 70%;
+	top: 25%
+}
+
+#lder {
+	position: relative;
+	width: 10%;
+	height: 100%;
+	float: right;
+}
+
+#logo {
+	position: relative;
+	margin:0 auto;
+	width: 100%;
+	height: 100%;
+	background-image: url("../imgs/logo.png");
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: auto 80%;
+}
+
+#salir {
+	position: relative;
+	text-align: center;
+}
+
+#salir img {
+	position: relative;
+}
+
+#salir a:link, #salir a:visited {
+	text-decoration: none;
+	font: 11px "arial";
+	color: #000;
+}
+
+#salir a:hover {
+	color: #c00;
+}
+
+#salir a img {
+	border: 0;
+}
+
+
+/* tabla menu */
+
+.tmenu{
+	position: relative;
+	height: 100%;
+	width: 100%;
+}
+
+.tmenu .menu{
+	height: 100%;
+	width: 12%;
+	font-family: Calibri, Helvetica, sans-serif;
+	font-weight: normal;
+	color: #000;
+	text-transform: uppercase;
+	background-color: #EFEFEF;
+	/*background-image: url(../imgs/textura_fondo.jpg);*/
+}
+
+.menuitem{
+	position: relative;
+	margin:0 auto;
+    width: 100%;
+    height: 10%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: auto 90%;
+}
+
+.tmenu .pantalla{
+	height: 100%;
+	width: 88%;
+}
+
+
+/*
+ *  SCROLLBAR STYLE 
+ */
+
+.scrollstyle::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+}
+
+.scrollstyle::-webkit-scrollbar
+{
+	width: 6px;
+	height:4px;
+	background-color: #F5F5F5;
+}
+
+.scrollstyle::-webkit-scrollbar-thumb
+{
+	background-color: #5BA5E8;
+}
+
+
+
+#nomapp {
+	position: relative;
+	top: 30px;
+	font: 11px "arial";
+	color: #000;
+	text-align: center;
+}
+
+/* contenido */
+
+
+/* contenido */
+#contenido1 {
+	position: relative;
+	width: 100%;
+	margin: 30px auto;
+	min-height: 520px;
+	height: auto !important;
+	
+}
+
+
+/*
+TOOLTIP
+*/
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    /*border-bottom: 1px dotted black;*/
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 300px;
+	font-size: 1.75vh;
+    background-color: #000;
+    color: #000;
+    text-align: center;
+    border-radius: 6px;
+	border-color: #0000FF;
+	border-width: 2px;
+	border-style: solid;
+    /*padding: 5px 0;*/
+    position: absolute;
+    z-index: 1;
+    /*bottom: 125%;*/
+    left: 50%;
+    margin-left: -50%;
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    /*margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;*/
+    border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+/*
+TOOLTIP TR
+*/
+
+.tooltip_tr {
+    position: relative;
+    display: inline-block;
+    /*border-bottom: 1px dotted black;*/
+}
+
+.tooltip_tr .tooltiptext_tr {
+    visibility: hidden;
+    width: auto;
+    height: auto;
+	font-size: 1.75vh;
+    background-color: #000;
+    color: #000;
+    text-align: center;
+    border-radius: 6px;
+	border-color: #0000FF;
+	border-width: 2px;
+	border-style: solid;
+    /*padding: 5px 0;*/
+    position: absolute;
+    z-index: 1;
+    /*bottom: 125%;*/
+    left: 50%;
+    margin-left: -50%;
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+.tooltip_tr .tooltiptext_tr::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    /*margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;*/
+    border-color: #555 transparent transparent transparent;
+}
+
+.tooltip_tr:hover .tooltiptext_tr {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* tabla datos */
+
+.white{
+	color: #000;	
+}
+
+.tinfo {
+	position: relative;
+	margin: 0 auto;
+	border: 1px solid #999;
+	
+}
+
+.tinfo th {
+	padding: 7px 5px 7px 5px;
+	text-align: center;
+	font-family: Calibri, Helvetica, sans-serif;
+	font-size: 13px;
+	font-weight: BOLD;
+	color: #ffffff;
+	text-transform: uppercase;
+	background-color: #00ADB5;
+}
+
+.tinfo td {
+	height: 50px;
+	padding-left: 5px;
+	padding-right: 5px;
+	font: 12px "Calibri light";
+	color: #000;
+	text-align: center;
+}
+
+.par {
+	background-color: #cfcfcf;
+}
+
+.impar {
+	background-color: #cfcfcf;
+}
+
+/* formulario */
+.forma {
+}
+
+.tforma {
+	position: relative;
+	margin: 0 auto;
+	padding: 2px 1% 2px 1%;
+	border: 1px solid #999;
+	color: white;
+	background-color: white;
+}
+
+.tforma tr {
+	height: 30px;
+}
+.tforma .etq {
+	width: 90px;
+	font: bold 13px "calibri";
+	color: #444;
+}
+
+.tforma .ctxt {
+	height: 18px;
+	width: 200px;
+	padding: 2px 2px 0 2px;
+	font: 13px "verdana";
+	color: #000;
+}
+
+.tforma .lista {
+	height: 20px;
+	width: 95%;
+	font: 12px "verdana";
+	color: #333;
+}
+
+.tforma .oplista {
+	font: 13px "verdana";
+	color: #000;
+}
+
+.tforma .btn {
+	margin-left: 10px;
+	padding-left: 7px;
+	padding-right: 7px;
+	font: 13px "tahoma";
+	color: #000;
+}
+
+.botonin{
+	background: url(../imgs/excel_in.png);
+	background-repeat: no-repeat;
+    background-position: -18px -19px;
+    /*background-size: auto 90%;*/
+}
+
+.botonout{
+	background: url(../imgs/excel_out.png);
+	background-repeat: no-repeat;
+    background-position: -18px -19px;
+    /*background-size: auto 90%;*/
+}
+
+.boton{
+	background: url(../imagenes_dash/glass2.png);
+	background-repeat: no-repeat;
+    background-position: -18px -19px;
+    /*background-size: auto 90%;*/
+}
+
+.dashlinks{
+	font: 13px "Calibri light";
+	color: #ffffff;
+}
+
+.dashdiv {
+/*	background-color: #5A5A5A;*/
+	background-color: #000030;
+}
+
+.dashtd{
+	border-style: outset;
+	border-color: #303030
+}
+
+.link{
+	color: #ffffff;
+	text-decoration: none;
+}
+.observaciones{
+	width: 99%;
+	background-color: #262626;
+	color: white;
+	font-size: 2vh;
+	/*border: none;*/
+}
+.nomod{
+	font: 30px "Calibri Light";
+}
+
+/* footer */
+#piep {
+	position: relative;
+	bottom: 0;
+	height: 8%;
+	width: 100%;
+	background-color: #EFEFEF;
+	/*background-image: url(../imgs/textura_cabezera.jpg);*/
+	background-repeat: repeat-x;
+	text-align: center;
+}
+
+#piep p {
+	padding-top: 7px;
+	padding-left: 10px;
+	font: 11px "arial";
+	color: #000;
+	text-align: center;
+}
+.tabFooter{
+	display: inline;
+	height: 100%;
+	width:100%;
+}
+.tabFooter td{
+	width: 50%;
+}
+.mic{
+	height: 100%;
+	width: 100%;
+	background-image: url("../imgs/logo3.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: auto 80%;
+	display: inline-block;
+}
+
+.img_menu{
+	height: 50px;
+	width: 150px;
+	/*height: 37px;
+	width: 111px;*/
+}
+.graph {
+	width: 200px; /* width and height are arbitrary, just make sure the #bar styles are changed accordingly */
+	height: 30px;
+	border: 1px solid #888; 
+	background: rgb(38,38,38);
+	background: -moz-linear-gradient(top, rgba(38,38,38,1) 0%, rgba(38,38,38,1) 23%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(38,38,38,1)), color-stop(23%,rgba(38,38,38,1)));
+	background: -webkit-linear-gradient(top, rgba(38,38,38,1) 0%,rgba(38,38,38,1) 23%);
+	background: -o-linear-gradient(top, rgba(38,38,38,1) 0%,rgba(38,38,38,1) 23%);
+	background: -ms-linear-gradient(top, rgba(38,38,38,1) 0%,rgba(38,38,38,1) 23%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#a8a8a8", endColorstr="#cccccc",GradientType=0 );
+	background: linear-gradient(top, rgba(38,38,38,1) 0%,rgba(38,38,38,1) 23%);
+	position: relative;
+	-webkit-border-radius: 5;
+	-moz-border-radius: 5;
+	border-radius: 5px;
+}
+
+#bar {
+	height: 30px; /* Not 30px because the 1px top-border brings it up to 30px to match #graph */
+	background: rgb(255,0,0); 
+	background: -moz-linear-gradient(top, rgba(255,0,0,1) 0%, rgba(255,0,0,1) 100%); 
+	background: -o-linear-gradient(top, rgba(255,0,0,1) 0%,rgba(255,0,0,1) 100%); 
+	background: -ms-linear-gradient(top, rgba(255,0,0,1) 0%,rgba(255,0,0,1) 100%); 
+	background: linear-gradient(top, rgba(255,0,0,1) 0%,rgba(255,0,0,1) 100%); 
+	/*border-top: 1px solid #000000;*/
+	-webkit-border-radius: 5;
+	-moz-border-radius: 5;
+	border-radius: 5px;
+}
+#bar p { position: absolute; text-align: center; width: 100%; margin: 0; line-height: 30px; }
+.error {
+	/* These styles are arbitrary */
+	background-color: #000000;
+	padding: 1em;
+	font-weight: bold;
+	color: red;
+	border: 1px solid red;
+}
+#bar2 {
+	height: 30px; /* Not 30px because the 1px top-border brings it up to 30px to match #graph */
+	background: rgb(0,255,0); 
+	background: -moz-linear-gradient(top, rgba(0,255,0,1) 0%, rgba(0,255,0,1) 100%); 
+	background: -o-linear-gradient(top, rgba(0,255,0,1) 0%,rgba(0,255,0,1) 100%); 
+	background: -ms-linear-gradient(top, rgba(0,255,0,1) 0%,rgba(0,255,0,1) 100%); 
+	background: linear-gradient(top, rgba(0,255,0,1) 0%,rgba(0,255,0,1) 100%); 
+	/*border-top: 1px solid #000000;*/
+	-webkit-border-radius: 5;
+	-moz-border-radius: 5;
+	border-radius: 5px;
+}	
+#bar2 p { position: absolute; text-align: center; width: 100%; margin: 0; line-height: 30px; }
+.error {
+	/* These styles are arbitrary */
+	background-color: #000000;
+	padding: 1em;
+	font-weight: bold;
+	color: red;
+	border: 1px solid red;
+}
+
+.progresstabsli{
+	display: inline;
+}
+	
+.dashgraph {
+	width: 200px; /* width and height are arbitrary, just make sure the #bar styles are changed accordingly */
+	height: 30px;
+	border: 1px solid #888; 
+	background: rgb(255,255,255);
+	background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 23%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(23%,rgba(255,255,255,1)));
+	background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(255,255,255,1) 23%);
+	background: -o-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(255,255,255,1) 23%);
+	background: -ms-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(255,255,255,1) 23%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#a8a8a8", endColorstr="#cccccc",GradientType=0 );
+	background: linear-gradient(top, rgba(255,255,255,1) 0%,rgba(255,255,255,1) 23%);
+	position: relative;
+	-webkit-border-radius: 5;
+	-moz-border-radius: 5;
+	border-radius: 5px;
+}
+
+#dashbar {
+	height: 30px; /* Not 30px because the 1px top-border brings it up to 30px to match #graph */
+	background: rgb(32,195,190); 
+	background: -moz-linear-gradient(top, rgba(32,195,190,1) 0%, rgba(32,195,190,1) 100%); 
+	background: -o-linear-gradient(top, rgba(32,195,190,1) 0%,rgba(32,195,190,1) 100%); 
+	background: -ms-linear-gradient(top, rgba(32,195,190,1) 0%,rgba(32,195,190,1) 100%); 
+	background: linear-gradient(top, rgba(32,195,190,1) 0%,rgba(32,195,190,1) 100%); 
+	/*border-top: 1px solid #000000;*/
+	-webkit-border-radius: 4;
+	-moz-border-radius: 4;
+	border-radius: 4px;
+}
+#dashbar p { position: absolute; text-align: center; width: 100%; margin: 0; line-height: 30px; color: #000000}
+.error {
+	/* These styles are arbitrary */
+	background-color: #000000;
+	padding: 1em;
+	font-weight: bold;
+	color: red;
+	border: 1px solid red;
+}
+#dashbar2 {
+	height: 30px; /* Not 30px because the 1px top-border brings it up to 30px to match #graph */
+	background: rgb(0,255,0); 
+	background: -moz-linear-gradient(top, rgba(0,255,0,1) 0%, rgba(0,255,0,1) 100%); 
+	background: -o-linear-gradient(top, rgba(0,255,0,1) 0%,rgba(0,255,0,1) 100%); 
+	background: -ms-linear-gradient(top, rgba(0,255,0,1) 0%,rgba(0,255,0,1) 100%); 
+	background: linear-gradient(top, rgba(0,255,0,1) 0%,rgba(0,255,0,1) 100%); 
+	/*border-top: 1px solid #000000;*/
+	-webkit-border-radius: 4;
+	-moz-border-radius: 4;
+	border-radius: 4px;
+}	
+#dashbar2 p { position: absolute; text-align: center; width: 100%; margin: 0; line-height: 30px; }
+.error {
+	/* These styles are arbitrary */
+	background-color: #000000;
+	padding: 1em;
+	font-weight: bold;
+	color: red;
+	border: 1px solid red;
+}
+
+
+/**************************************/
+/*PANTALLA DE REGISTRO DE COTIZACIONES*/
+/**************************************/
+
+#titulo_registro{
+	position: relative;
+	height: 10%;
+	width: 100%;
+	/*background-color: #000;*/
+}
+
+#datos_cotizacion{
+	width:100%;
+	height:30%;
+	position:relative;
+	overflow: scroll;	
+	overflow-X: auto;
+	overflow-Y: auto;	
+	display: inline-block;
+}
+#items{
+	position: relative;
+	height: 69%;
+	width: 100%;
+	overflow: scroll;
+	overflow-X: auto;
+	overflow-Y: auto;
+	display: inline-block;
+}
+#items_cotizacion{			
+	position: relative;	
+	height: 85%;
+	width: 100%;
+	overflow: scroll;
+	overflow-X: auto;
+	overflow-Y: auto;
+}
+#lista_items_cot{
+	position: relative;
+	height: 100%;
+	width: 79%;
+	overflow: scroll;
+	overflow-X: auto;
+	overflow-Y: auto;
+	display: inline-block;
+}
+#lista_items{
+	position: relative;
+	height: 100%;
+	width: 79%;
+	overflow: scroll;
+	overflow-X: auto;
+	overflow-Y: auto;
+	display: inline-block;
+}
+#botones{
+	position: absolute;
+	height: 100%;
+	width: 20%;
+	overflow: scroll;
+	overflow-X: auto;
+	overflow-Y: auto;
+	display: inline-block;
+}
+#botones h2{
+	text-align: left;
+}
+.fecha_cot{
+	color: #000000;
+	background-color: white;
+	font-family: "calibri";
+}
+.btn_guardar{
+	height: 37px;
+	width: 111px;
+	background-image: imgs/10.png;
+}
+.btn_guardar:hover {
+   background-image: url('LibraryHoverTrans.png');
+}
+.cforma {
+	position: relative;
+	margin: 0 auto;
+	padding: 2px 1% 2px 1%;
+	border: 1px solid #999;
+	color: white;
+	background-color: white;
+}
+
+.cforma tr {
+	height: 30px;
+}
+.cforma .etq {
+	font: bold 13px "calibri";
+	color: #00ADB5;
+}
+
+.cforma .ctxt {
+	height: 18px;
+	padding: 2px 2px 0 2px;
+	font: 12px "verdana";
+	color: #000;
+	width: 130px;
+}
+
+.cforma .ctxtfecha {
+	height: 18px;
+	padding: 2px 2px 0 2px;
+	font: 12px "verdana";
+	color: #000;
+	width: 150px;
+}
+
+.cforma .lista {
+	height: 20px;
+	width: 100px;
+	font: 12px "verdana";
+	color: #333;
+}
+
+.cforma .oplista {
+	font: 13px "verdana";
+	color: #000;
+}
+
+.cforma .btn {
+	margin-left: 10px;
+	padding-left: 7px;
+	padding-right: 7px;
+	font: 13px "tahoma";
+	color: #000;
+}

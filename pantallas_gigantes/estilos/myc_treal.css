@@ -1,0 +1,341 @@
+@charset "utf-8";
+/* jm - eiso */
+
+* {
+	outline: none;
+	margin: 0;
+	padding: 0;
+	
+}
+
+p{
+	font: 100% "calibri", "LG Display-Light";
+}
+
+span{
+	font: 50% "calibri", "LG Display-Light";
+}
+
+body {
+	background-image: url(../imgs/textura_fondo.jpg);
+}
+
+#contenedor {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+}
+#maquinas {
+	position: absolute;
+	height: 90%;
+	width: 100%;
+}
+#maquinasfull {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+}
+#mensajes {
+	position: relative;
+	height: 10%;
+	width: 100%;
+	text-align: center;
+}
+#parpadeo{
+	background: #FFFFFF;
+}
+.centrado{
+	height: 100%;
+	width: 100%;
+	text-align: center;
+	vertical-align: middle;
+}
+.mensaje{
+	height: 100%;
+	width: 100%;
+	font: 600% "calibri", "LG Display-Light";
+	text-align: center;
+	vertical-align: middle;
+	height: 100%;
+	width: 100%;
+	top: 50%;
+}
+.verde{
+	background: #00FF00;
+	color: #000066;
+}
+
+.rojo{
+	background: #FF0000;
+	color: #FFFFFF;
+}
+.altverde{
+	background: #22B14C;
+	color: #FFFF99;
+}
+
+.altrojo{
+	background: #D72828;
+	color: #000000;	
+}
+.noparo{
+	color: #00FF00;
+}
+.noparoalt{
+	color: #22B14C;
+}
+.div1{
+	font: 400% "calibri", "LG Display-Light";
+	text-align: center;
+	height: 100%;
+	width: 100%;
+    box-sizing:border-box;
+	border: 5px solid black;
+	border-radius: 3%;
+}
+
+.div2{
+	font: 450% "calibri", "LG Display-Light";
+	text-align: center;
+	height: 100%;
+	width: 49.5%;
+	display: inline-block;
+    box-sizing:border-box;
+	border: 5px solid black;
+	border-radius: 3%;
+}
+
+.div3{
+	font: 350% "calibri", "LG Display-Light";
+	text-align: center;
+	height: 100%;
+	width: 33%;
+	display: inline-block;
+    box-sizing:border-box;
+	border: 5px solid black;
+	border-radius: 3%;
+	
+}
+
+.div4{
+	font: 250% "calibri", "LG Display-Light";
+	text-align: center;
+	height: 49.5%;
+	width: 49.5%;
+	display: inline-block;
+	border-style: solid;
+    box-sizing:border-box;
+	border: 5px solid black;
+	border-radius: 3%;
+}
+
+.div6{
+	font: 250% "calibri", "LG Display-Light";
+	text-align: center;
+	height: 49%;
+	width: 33%;
+	display: inline-block;
+	border-style: solid;
+    box-sizing:border-box;
+	border: 5px solid black;
+	border-radius: 3%;
+}
+.div8{
+	font: 250% "calibri", "LG Display-Light";
+	text-align: center;
+	height: 49.5%;
+	width: 24.7%;
+	display: inline-block;
+	border-style: solid;
+    box-sizing:border-box;
+	border: 5px solid black;
+	border-radius: 3%;
+}
+.div1 #titulo {
+	height: 10%;
+	width: 100%;
+	overflow: hidden;
+}
+.div1 #datos{
+	height: 60%;
+	width: 100%;
+	font: 270% "calibri", "LG Display-Light";
+}
+.div1 #datos_tiempo{
+	height: 60%;
+	width: 100%;
+	font: 220% "calibri", "LG Display-Light";
+	display: inline-block;
+}
+.div1 #parada{
+	height: 30%;
+	width: 100%;
+	overflow: hidden;
+}
+.div2 #titulo {
+	height: 15%;
+	width: 100%;
+	overflow: hidden;
+}
+.div2 #datos{
+	height: 55%;
+	width: 100%;
+	font: 200% "calibri", "LG Display-Light";
+}.div2 #datos_tiempo{
+	height: 55%;
+	width: 100%;
+	font: 200% "calibri", "LG Display-Light";
+}
+.div2 #parada{
+	height: 30%;
+	width: 100%;
+	overflow: hidden;
+}
+.div3 #titulo {
+	height: 15%;
+	width: 100%;
+	overflow: hidden;
+	font: 120% "calibri", "LG Display-Light";
+}
+.div3 #datos{
+	height: 55%;
+	width: 100%;
+	font: 250% "calibri", "LG Display-Light";
+}
+.div3 #datos_tiempo{
+	height: 55%;
+	width: 100%;
+	font: 190% "calibri", "LG Display-Light";
+}
+.div3 #parada{
+	height: 30%;
+	width: 100%;
+	overflow: hidden;
+}
+.div4 #titulo {
+	height: 15%;
+	width: 100%;
+	overflow: hidden;
+	font: 120% "calibri", "LG Display-Light";
+}
+.div4 #datos{
+	height: 55%;
+	width: 100%;
+	font: 180% "calibri", "LG Display-Light";
+}
+.div4 #datos_tiempo{
+	height: 55%;
+	width: 100%;
+	font: 180% "calibri", "LG Display-Light";
+}
+.div4 #parada{
+	height: 30%;
+	width: 100%;
+	overflow: hidden;
+}
+.div6 #titulo {
+	height: 15%;
+	width: 100%;
+	font: 120% "calibri", "LG Display-Light";
+	overflow: hidden;
+}
+.div6 #datos{
+	height: 55%;
+	width: 100%;
+	font: 180% "calibri", "LG Display-Light";
+}
+.div6 #datos_tiempo{
+	height: 55%;
+	width: 100%;
+	font: 150% "calibri", "LG Display-Light";
+}
+.div6 #parada{
+	height: 35%;
+	width: 100%;
+	overflow: hidden;
+}
+.div8 #titulo {
+	height: 15%;
+	width: 100%;
+	overflow: hidden;
+}
+.div8 #datos{
+	height: 55%;
+	width: 100%;
+	text-align: center;	
+	font: 190% "calibri", "LG Display-Light";
+}
+.div8 #datos_tiempo{
+	height: 55%;
+	width: 100%;
+	text-align: center;	
+	font: 190% "calibri", "LG Display-Light";
+	display: inline-block;
+}
+.div8 #parada{
+	height: 30%;
+	width: 100%;
+	overflow: hidden;
+}
+.unidverde{
+	border-top-style: solid;
+	display: inline-block;
+	border-color: #0BD40B;
+	/*border-width: 8px;*/
+	/*azul: 0,0,102*/
+}
+.unidrojo{
+	border-top-style: solid;
+	display: inline-block;
+	border-color: #D40B0B;
+	/*border-width: 8px;*/
+	/*rojo: 212,11,11*/
+}
+.blanco{
+	width: 10%;
+}
+/*RANKING*/
+.titulo{
+	width: 100%;
+	height: 10%;
+	text-align: center;
+	font: 590% "calibri light", "LG Display-Light";
+	color: #FFFFFF;
+}
+.ranking{
+	width: 100%;
+	height: 75%;
+	text-align: left;
+	font: 200% "calibri", "LG Display-Light";
+	color: #FFFFFF;
+}
+.rank{
+	margin: 0 auto;
+	width: 100%;
+	text-align: center;
+}
+.rank th{
+	font: 190% "calibri light", "LG Display-Light";
+	color: red;
+}
+.rank td{
+	font: 120% "calibri light", "LG Display-Light";
+}
+.pos{
+	width: 20%;
+}
+.maquina{
+	width: 60%;
+}
+.oee{
+	width: 20%;
+}
+.par {
+/*	background-color: #5A5A5A;*/
+	background-color: #262626;
+}
+
+.impar {
+/*	background-color: #e1e1e1;*/
+	background-color: #404040	;
+}

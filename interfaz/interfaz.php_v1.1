@@ -1,0 +1,364 @@
+<?
+ session_start();
+
+ 
+ include("../clases/adodb5/adodb-exceptions.inc.php");
+include("../clases/adodb5/adodb.inc.php");
+
+date_default_timezone_set('GTM-5');
+if(!$_POST[fecha])
+$fechaphp= date('Y-m-d', time());
+else
+$fechaphp=$_POST[fecha];
+//$fechaphp= "2010-08-25";
+//2012-02-19 14:46:31
+//$fechaphp= "2012-08-25 14:46:31";
+//traer la informacion de los turnos en el rango necesario
+ include("../clases/conexion.php");
+        $sql="select T1.* from (SELECT t.id_proceso,t.id_turno,t.orden_produccion,t.fecha_inicio,t.dato_extra,t.fecha_fin,t.unidades_conteo,p.nombre
+FROM turnos as t, procesos as p where t.id_proceso=p.id_proceso) as T1 where to_char(fecha_inicio,'yyyy-mm-dd')=to_char(to_date('$fechaphp','yyyy-mm-dd') - 1 * interval '1 day','yyyy-mm-dd')
+or to_char(fecha_fin,'yyyy-mm-dd')=to_char(to_date('$fechaphp','yyyy-mm-dd') - 1 * interval '1 day','yyyy-mm-dd') order by id_proceso,id_turno";
+
+        $result=$conexion_pg->Execute($sql);
+        if ($result === false)
+            {
+            echo 'error al Buscar turnos: '.$conn->ErrorMsg().'<BR>';
+            }
+         $conexion_pg->Close();
+		 //todos los turnos del dia anterior
+		$arr = $result->getArray();
+		$conturnos=count($arr);
+		$i=0;
+		
+		//fecha para evaluar si el turno inicio un dia antes de la fech de sleeccion
+		$finit=date('Y-m-d',strtotime($fechaphp." - 2 day"));		
+		//fecha para evaluar si el turno finalizo un dia despues de la fech de sleeccion
+		$ffint=date('Y-m-d',strtotime($fechaphp));		
+	
+		$arraysalida= array();
+		$filassalida=0;
+		
+for($i=0;$i<$conturnos;$i++)
+{			
+		$fechabdinit=date('Y-m-d',strtotime($arr[$i]["fecha_inicio"]));		
+		$fechabdfint=date('Y-m-d',strtotime($arr[$i]["fecha_fin"]));	
+		if($fechabdinit==$finit)//si este inicio  el dia anterior a la seleccion se cambia la fecha por la seleccion 00:00:00
+		$arr[$i]["fecha_inicio"]=date('Y-m-d',strtotime($fechaphp." - 1 day"))." 00:00:00";
+		if($fechabdfint==$ffint)//si este finalizo  el dia despues a la seleccion se cambia la fecha por la seleccion 23:59:59
+		$arr[$i]["fecha_fin"]=date('Y-m-d',strtotime($fechaphp." - 1 day"))." 23:59:59";
+		
+		$hiniciot= date("H:i:s",strtotime($arr[$i]["fecha_inicio"]));
+		
+		//trae los operarios pdel turno 
+		include("../clases/conexion.php");
+        $sql="select id_empleado, '0' as traslapo from turno_asistencia where id_turno='".$arr[$i]["id_turno"]."' and id_proceso='".$arr[$i]["id_proceso"]."'";
+		$resulte=$conexion_pg->Execute($sql);
+        if ($resulte === false)
+            {
+            echo 'error al Buscar empleados: '.$conn->ErrorMsg().'<BR>';
+            }
+         $conexion_pg->Close();
+		 //todos los paros de ese turno
+		$arremp = $resulte->getArray();
+		$conemp=count($arremp);
+		
+	
+		//fin trae los operarios pdel turno 
+
+//buscamos los operarios con translapo
+$cet=0;
+for($cet=0;$cet<$conemp;$cet++)
+{
+	//trae los operarios pdel turno con trnslapo
+		include("../clases/conexion.php");
+        $sql="select count(*) from turnos as t, turno_asistencia as ta where 
+ta.id_turno = t.id_turno and ta.id_proceso=t.id_proceso and t.fecha_inicio>='".$arr[$i]["fecha_inicio"]."' and t.fecha_inicio <='".$arr[$i]["fecha_fin"]."'
+and ta.id_empleado='".$arremp[$cet][id_empleado]."'";
+		$resultet=$conexion_pg->Execute($sql);
+	//echo $arremp[0][id_empleado]."-".$arremp[0][traslapo];
+	$arret = $resultet->getArray();
+	if($arret[0][count]>=2)
+	{
+		$arremp[$cet][traslapo]="S";
+		}
+		else
+		{
+		$arremp[$cet][traslapo]="N";
+		}
+	
+	//fin trae los operarios pdel turno con trnslapo
+	}
+//fin buscamos los operarios con translapo
+								
+								
+								
+								
+		//trae siguiente evento para hora fin, sin o hay paradas se queda con la linae 
+		 include("../clases/conexion.php");
+        $sql="SELECT T1.* FROM
+(SELECT tp.id_turno,tp.id_proceso,p.nombre,tp.fecha_inicio,tp.fecha_fin,tp.id_parada,tp.horas,tp.unidades,pa.tipo_parada 
+ from turno_parada as tp, procesos as p, paradas as pa where tp.id_parada = pa.id_parada and  tp.id_proceso=p.id_proceso and tp.id_turno='".$arr[$i]["id_turno"]."' and tp.id_proceso='".$arr[$i]["id_proceso"]."' order by tp.fecha_inicio) AS T1 WHERE 
+to_char(fecha_inicio,'yyyy-mm-dd')=to_char(to_date('$fechaphp','yyyy-mm-dd') - 1 * interval '1 day','yyyy-mm-dd') 
+or to_char(fecha_fin,'yyyy-mm-dd')=to_char(to_date('$fechaphp','yyyy-mm-dd') - 1 * interval '1 day','yyyy-mm-dd') order by fecha_inicio";
+
+//echo $sql;
+//exit();
+        $resultp=$conexion_pg->Execute($sql);
+        if ($resultp === false)
+            {
+            echo 'error al Buscar turnos: '.$conn->ErrorMsg().'<BR>';
+            }
+         $conexion_pg->Close();
+		 //todos los paros de ese turno
+		$arrparo = $resultp->getArray();
+		$conparos=count($arrparo);
+
+//fin trae siguiente evento para hora fin, sin o hay paradas se queda con la linae 
+
+
+		if($conparos==0)//si no hay padaras queda la del turno
+		{
+		$hfint= date("H:i:s",strtotime($arr[$i]["fecha_fin"]));
+		}
+		else//toma el inicio de la primera parada menos un segundo
+		{
+		
+		$fechabdinit=date('Y-m-d',strtotime($arrparo[0]["fecha_inicio"]));				
+		if($fechabdinit==$finit)//si este inicio  el dia anterior a la seleccion se cambia la fecha por la seleccion 00:00:00
+		$arrparo[0]["fecha_inicio"]=date('Y-m-d',strtotime($fechaphp." - 1 day"))." 00:00:00";		
+		
+		$hfint =date("H:i:s",strtotime($arrparo[0]["fecha_inicio"]." - 1 second"));
+		}
+		//print_r($arrparo);						
+		//fecha
+		$fecha=date('m/d/Y',strtotime($fechaphp." - 1 day"));
+$flagini00=0;
+//mirar si el turno no esta en paro en al cambio turno y parada dia despues
+if($arrparo[0]["fecha_inicio"]!=$arr[$i]["fecha_inicio"])
+{
+	$flagini00=1;
+//TODO: ciclo operarios  $arremp[0][id_empleado]."-".$arremp[0][traslapo]
+$ccc=0;
+for($ccc=0;$ccc<count($arremp);$ccc++)
+	{
+			$arraysalida[$filassalida][0]=$arr[$i]["orden_produccion"];
+			$arraysalida[$filassalida][1]="consecutivo_op";
+			$arraysalida[$filassalida][2]="TP1";
+			$arraysalida[$filassalida][3]=$arr[$i]["nombre"];
+			$arraysalida[$filassalida][4]=$fecha;
+			$arraysalida[$filassalida][5]=$arr[$i]["dato_extra"];
+			$arraysalida[$filassalida][6]=date('H:i',strtotime($hiniciot));//$hiniciot;
+			$arraysalida[$filassalida][7]=date('H:i',strtotime($hfint));//$hfint;
+			$arraysalida[$filassalida][8]=number_format(((strtotime(date('H:i',strtotime($hfint)))-strtotime(date('H:i',strtotime($hiniciot))))/3600), 4, '.', '');//number_format(((strtotime($hfint)-strtotime($hiniciot))/3600), 4, '.', '');
+			$arraysalida[$filassalida][9]="0";
+			$arraysalida[$filassalida][10]="S";
+			$arraysalida[$filassalida][11]=$arremp[$ccc][traslapo];;
+			$arraysalida[$filassalida][12]="0";
+			$arraysalida[$filassalida][13]="0";
+			$arraysalida[$filassalida][14]="0";
+			$arraysalida[$filassalida][15]="0";
+			$arraysalida[$filassalida][16]=$arremp[$ccc][id_empleado];
+			$arraysalida[$filassalida][17]=date('m/d/Y',strtotime($fechaphp));
+			$arraysalida[$filassalida][18]=date('H:i:s',strtotime($fechaphp));
+			$arraysalida[$filassalida][19]=$_SESSION[nombre];
+			$filassalida++;
+	}
+}
+		$ip=0;
+		//recorremos las paradas
+		for($ip=0;$ip<count($arrparo);$ip++)
+		{
+		$fechabdinit=date('Y-m-d',strtotime($arrparo[$i]["fecha_inicio"]));		
+		$fechabdfint=date('Y-m-d',strtotime($arrparo[$i]["fecha_fin"]));	
+		
+		
+		if($fechabdinit==$finit)//si este inicio  el dia anterior a la seleccion se cambia la fecha por la seleccion 00:00:00
+		$arrparo[$ip]["fecha_inicio"]=date('Y-m-d',strtotime($fechaphp." - 1 day"))." 00:00:00";
+		
+		if($fechabdfint==$ffint)//si este finalizo  el dia despues a la seleccion se cambia la fecha por la seleccion 23:59:59
+		$arrparo[$ip]["fecha_fin"]=date('Y-m-d',strtotime($fechaphp." - 1 day"))." 23:59:59";		
+		
+		if($flagini00==0)//si el turno esta en parada a la hora del dia despues
+		{
+		$hiniciot= date("H:i:s",strtotime($arrparo[$ip]["fecha_inicio"]));
+		}
+		else
+		{
+			$hiniciot= date("H:i:s",strtotime($arrparo[$ip]["fecha_inicio"]." + 1 second"));
+		}
+		
+		$hfint= date("H:i:s",strtotime($arrparo[$ip]["fecha_fin"]));
+		
+			//TODO: ciclo operarios  $arremp[0][id_empleado]."-".$arremp[0][traslapo]
+			$ccc=0;
+			for($ccc=0;$ccc<count($arremp);$ccc++)
+			{
+					$arraysalida[$filassalida][0]=$arr[$i]["orden_produccion"];
+					$arraysalida[$filassalida][1]="consecutivo_op";
+					$arraysalida[$filassalida][2]=$arrparo[$ip]["id_parada"];
+					$arraysalida[$filassalida][3]=$arrparo[$ip]["nombre"];
+					$arraysalida[$filassalida][4]=$fecha;
+					$arraysalida[$filassalida][5]=$arr[$i]["dato_extra"];
+					$arraysalida[$filassalida][6]=date('H:i',strtotime($hiniciot));//$hiniciot;
+					$arraysalida[$filassalida][7]=date('H:i',strtotime($hfint));//$hfint;
+					$arraysalida[$filassalida][8]=number_format(((strtotime(date('H:i',strtotime($hfint)))-strtotime(date('H:i',strtotime($hiniciot))))/3600), 4, '.', '');//number_format(((strtotime($hfint)-strtotime($hiniciot))/3600), 4, '.', '');
+					$arraysalida[$filassalida][9]="0";
+					//si la paradas es planeada = 2
+						if($arrparo[$ip]["tipo_parada"]=="2")
+						{
+							$arraysalida[$filassalida][10]="S";
+						}
+					else
+					{
+						$arraysalida[$filassalida][10]="N";
+						}
+					$arraysalida[$filassalida][11]=$arremp[$ccc][traslapo];
+
+					$arraysalida[$filassalida][12]="0";
+					$arraysalida[$filassalida][13]="0";
+					$arraysalida[$filassalida][14]="0";
+					$arraysalida[$filassalida][15]="0";
+					$arraysalida[$filassalida][16]=$arremp[$ccc][id_empleado];
+					$arraysalida[$filassalida][17]=date('m/d/Y',strtotime($fechaphp));
+					$arraysalida[$filassalida][18]=date('H:i:s',strtotime($fechaphp));
+					$arraysalida[$filassalida][19]=$_SESSION[nombre];
+					$filassalida++;
+					
+			}	
+							
+			//tiempo productivo entre paradas
+			//tiempo productivo entre paradas
+			//tiempo productivo entre paradas			
+			
+			$hiniciot= date("H:i:s",strtotime($arrparo[$ip]["fecha_fin"]." + 1 second"));
+			
+			$unidades = 0;
+			//pregunta si era la ultima parada
+			if(($ip+1)==count($arrparo))
+			{				
+				$hfint= date("H:i:s",strtotime($arr[$i]["fecha_fin"]));
+				$unidades=$arr[$i]["unidades_conteo"]-$arrparo[$ip]["unidades"];
+				//echo "fin= ".$hfint;
+				//exit();
+			}
+			else
+			{				
+				$hfint= date("H:i:s",strtotime($arrparo[$ip+1]["fecha_inicio"]));
+				$unidades=$arrparo[$ip+1]["unidades"]-$arrparo[$ip]["unidades"];
+			}						
+						//TODO: ciclo operarios  $arremp[0][id_empleado]."-".$arremp[0][traslapo]
+			$ccc=0;
+			
+			//valida que no de 0 o menos
+			if(((strtotime(date('H:i',strtotime($hfint)))-strtotime(date('H:i',strtotime($hiniciot))))/3600)>0)
+			{
+		
+			for($ccc=0;$ccc<count($arremp);$ccc++)
+				{
+						$arraysalida[$filassalida][0]=$arr[$i]["orden_produccion"];
+						$arraysalida[$filassalida][1]="consecutivo_op";
+						$arraysalida[$filassalida][2]="TP1";
+						$arraysalida[$filassalida][3]=$arr[$i]["nombre"];
+						$arraysalida[$filassalida][4]=$fecha;
+						$arraysalida[$filassalida][5]=$arr[$i]["dato_extra"];
+						$arraysalida[$filassalida][6]=date('H:i',strtotime($hiniciot));//$hiniciot;
+						$arraysalida[$filassalida][7]=date('H:i',strtotime($hfint));//$hfint;
+						$arraysalida[$filassalida][8]=number_format(((strtotime(date('H:i',strtotime($hfint)))-strtotime(date('H:i',strtotime($hiniciot))))/3600), 4, '.', '');//number_format(((strtotime($hfint)-strtotime($hiniciot))/3600), 4, '.', '');
+						$arraysalida[$filassalida][9]="0";
+						$arraysalida[$filassalida][10]="S";
+						$arraysalida[$filassalida][11]=$arremp[$ccc][traslapo];;
+						$arraysalida[$filassalida][12]="0";
+						$arraysalida[$filassalida][13]="0";
+						$arraysalida[$filassalida][14]=$unidades;
+						$arraysalida[$filassalida][15]="0";
+						$arraysalida[$filassalida][16]=$arremp[$ccc][id_empleado];
+						$arraysalida[$filassalida][17]=date('m/d/Y',strtotime($fechaphp));
+						$arraysalida[$filassalida][18]=date('H:i:s',strtotime($fechaphp));
+						$arraysalida[$filassalida][19]=$_SESSION[nombre];
+						$filassalida++;						
+				}		
+			}
+		}
+				
+		//print_r($arr[$i]);	
+		//echo $arr[$i]["id_proceso"]."->".$arr[$i]["id_turno"]."->I:".$arr[$i]["fecha_inicio"]."->F:".$arr[$i]["fecha_fin"]."<br/>";//."->".date('Y-m-d',$arr[$i]["fecha_inicio"]);	
+		//break;
+}		
+
+		$c=0;
+		$iop=2;
+		//autonumerico ops
+		for($c=0;$c<count($arraysalida);$c++)
+		{
+				$arraysalida[$c][1]=$iop;		
+				
+				if($arraysalida[$c][0]==$arraysalida[$c+1][0])
+				$iop++;
+				else
+				$iop=2;
+		}
+
+	$salida="";
+		$c=0;
+		for($c=0;$c<count($arraysalida);$c++)
+		{
+			$cj=0;
+			$salida=$salida."\r\nRE|";
+			for($cj=0;$cj<20;$cj++)
+			{
+				$salida=$salida.$arraysalida[$c][$cj]."|";
+			}
+		//print_r($arraysalida[$c]);	
+		//echo "<br/>";
+		//$salida=$salida."\r\n";
+		}
+$dat=	date('Y-m-d',strtotime($fechaphp));
+if (file_exists("INTERFAZ_".$dat.".txt"))
+{
+   unlink("INTERFAZ_".$dat.".txt");
+}
+$archivo = fopen ("INTERFAZ_".$dat.".txt", "a+");//escribe al final del archivo
+fwrite($archivo, $salida);
+fclose($archivo);
+
+
+?>
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Interfaz</title>
+<link type="text/css" rel="stylesheet" href="calendario/dhtmlgoodies_calendar/dhtmlgoodies_calendar.css?random=20051112" media="screen"></link>
+	<script type="text/javascript" src="calendario/dhtmlgoodies_calendar/dhtmlgoodies_calendar.js?random=20060118"></script>
+
+</head>
+<body>
+
+<form class="forma" action="interfaz.php"  method="POST" name="parametros">
+ <input class="ctxt" type="text" name="fecha" id="fecha" onclick="displayCalendar(document.forms[0].fechai,'yyyy/mm/dd',this)" value="<? echo date("Y/m/d",strtotime($fechaphp));  ?>"/>
+<input class="btn"  type="submit" value="Ver Reporte"/>
+
+</form>
+
+<a href="<? echo "INTERFAZ_".$dat.".txt"; ?>" target="_blank">Descargar Archivo</a>
+
+<br/>
+
+<?
+echo "<table border=\"1\">";
+		for($c=0;$c<count($arraysalida);$c++)
+		{
+			echo "<tr>";
+			$cj=0;
+			for($cj=0;$cj<20;$cj++)
+			{
+				echo "<td>".$arraysalida[$c][$cj]."</td>";
+			}
+			echo "</tr>";
+		}
+echo "</table>";
+?>
+</body>
+</html>

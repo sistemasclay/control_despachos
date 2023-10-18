@@ -1,0 +1,24 @@
+***************************
+* dynDateTime: a jQuery date+time picker
+*
+* http://code.google.com/p/dyndatetime
+*
+* Author: thetoolman@gmail.com
+*
+***************************
+
+This jQuery plugin makes it easy to add date and time selection to single textfield inputs.
+
+jQuery("input.dateField").dynDateTime();
+
+This example will make all input elements tagged with the 'dateField' class.  There are plenty of options for configuration; see details in documentation.
+
+***************************
+
+It is a fork of Dynarch.com's (LGPL) DHTML Calendar v1.0, and the initial codebase is little more then a jQuery wrapper.
+
+Author: Mihai Bazon, <mihai_bazon@yahoo.com>
+    http://dynarch.com/mishoo/
+	http://www.dynarch.com/projects/calendar/
+
+The fork source is wonderful tool that ceased LGPL development in 2005.  

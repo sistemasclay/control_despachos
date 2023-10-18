@@ -1,0 +1,479 @@
+@charset "utf-8";
+/* jm - eiso */
+
+* {
+	outline: none;
+	margin: 0;
+	padding: 0;
+	
+}
+
+body {
+	/*background-color: #4B4B4B;*/
+	background-image: url(../imgs/textura_fondo.jpg);
+}
+
+h1 {
+	font: 50px "calibri light";
+	color: #FFF;
+	text-align: center;
+	margin-bottom: 15px;
+}
+
+span{
+	color: #FFF;
+}
+
+#contenedor {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+}
+
+/* header */
+#cabecera {
+	height: 120px;
+	width: 100%;
+	background-image: url(../imgs/textura_cabezera.jpg);
+}
+
+#logo {
+	position: relative;
+	float:left;
+	top: 30px;
+	left: 10px;
+	height: 95px;
+	width: 250px;
+	background-image: url(../imgs/logo3.png);
+	background-repeat: no-repeat;
+       
+}
+
+#menuppal {
+	position: relative;
+	float: left;
+	top: 15px;
+	width: 1000px;
+}
+
+#menuppal ul li {
+	float: left;
+	margin-right: 10px;
+	list-style: none;
+	text-align: center;
+}
+
+#menuppal ul li a:link, #menuppal ul li a:visited {
+	height: 75px;
+	width: 70px;
+	padding-top: 15px;
+	display: block;
+	font: 11px "arial";
+	color: #fff;
+	line-height: 12px;
+	text-decoration: none;
+	text-align: center;
+	vertical-align: text-top;
+}
+
+#menuppal ul li a:hover {
+	color: #c00;
+}
+
+#menuppal ul li a img {
+	margin-bottom: 5px;
+	border: 0;
+}
+
+#lder {
+	position: relative;
+	float: right;
+	right: 10px;
+}
+
+#salir {
+	position: relative;
+	top: 10px;
+	text-align: center;
+}
+
+#salir img {
+	position: relative;
+}
+
+#salir a:link, #salir a:visited {
+	text-decoration: none;
+	font: 11px "arial";
+	color: #fff;
+}
+
+#salir a:hover {
+	color: #c00;
+}
+
+#salir a img {
+	border: 0;
+}
+
+#nomapp {
+	position: relative;
+	top: 30px;
+	font: 11px "arial";
+	color: #FFF;
+	text-align: center;
+}
+
+/* contenido */
+#contenido {
+	position: relative;
+	width: 80%;
+	margin: 30px auto;
+	min-height: 520px;
+	height: auto !important;
+
+
+}
+
+/* contenido */
+#contenido1 {
+	position: relative;
+	width: 100%;
+	margin: 30px auto;
+	min-height: 520px;
+	height: auto !important;
+	
+}
+
+
+/*
+TOOLTIP
+*/
+
+.tooltips {
+  position: relative;
+  display: inline;
+}
+.tooltips span {
+  position: absolute;
+  width:140px;
+  color: #000000;
+  background: #FFFFFF;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  visibility: hidden;
+  border-radius: 6px;
+}
+.tooltips span:after {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -8px;
+  width: 0; height: 0;
+  border-bottom: 8px solid #FFFFFF;
+  border-right: 8px solid transparent;
+  border-left: 8px solid transparent;
+}
+/*
+a:hover.tooltips span {
+  visibility: visible;
+  opacity: 1;
+  top: 30px;
+  left: 50%;
+  margin-left: -76px;
+  z-index: 999;
+}
+*/
+
+/* tabla datos */
+
+.white{
+	color: #fff;	
+}
+
+.tinfo {
+	position: relative;
+	margin: 0 auto;
+	border: 1px solid #999;
+}
+
+.tinfo th {
+	padding: 7px 5px 7px 5px;
+	text-align: center;
+	font-family: Calibri, Helvetica, sans-serif;
+	font-size: 15px;
+	font-weight: normal;
+	color: #fff;
+	text-transform: uppercase;
+	background-color: #262626;
+}
+
+.tinfo td {
+	height: 25px;
+	padding-left: 5px;
+	padding-right: 5px;
+	font: 13px "Calibri light";
+	color: #FFF;
+	text-align: center;
+}
+
+.par {
+/*	background-color: #5A5A5A;*/
+	background-color: #262626;
+}
+
+.impar {
+/*	background-color: #e1e1e1;*/
+	background-color: #404040	;
+}
+
+/* formulario */
+.forma {
+}
+
+.tforma {
+	position: relative;
+	margin: 0 auto;
+	padding: 20px 40px 20px 40px;
+	border: 1px solid #999;
+	color: white;
+}
+
+.tforma tr {
+	height: 35px;
+}
+
+.tforma .etq {
+	width: 90px;
+	font: bold 13px "arial";
+	color: #fff;
+}
+
+.tforma .ctxt {
+	height: 18px;
+	width: 200px;
+	padding: 2px 2px 0 2px;
+	font: 13px "verdana";
+	color: #000;
+}
+
+.tforma .lista {
+	height: 20px;
+	font: 13px "verdana";
+	color: #333;
+}
+
+.tforma .oplista {
+	font: 13px "verdana";
+	color: #000;
+}
+
+.tforma .btn {
+	margin-left: 10px;
+	padding-left: 7px;
+	padding-right: 7px;
+	font: 13px "tahoma";
+	color: #000;
+}
+
+.botonin{
+	background: url(../imgs/excel_in.png);
+	background-repeat: no-repeat;
+    background-position: -18px -19px;
+    /*background-size: auto 90%;*/
+}
+
+.botonout{
+	background: url(../imgs/excel_out.png);
+	background-repeat: no-repeat;
+    background-position: -18px -19px;
+    /*background-size: auto 90%;*/
+}
+
+.boton{
+	background: url(../imagenes_dash/glass2.png);
+	background-repeat: no-repeat;
+    background-position: -18px -19px;
+    /*background-size: auto 90%;*/
+}
+
+.dashlinks{
+	font: 13px "Calibri light";
+	color: #ffffff;
+}
+
+.dashdiv {
+/*	background-color: #5A5A5A;*/
+	background-color: #000030;
+}
+
+.dashtd{
+	border-style: outset;
+	border-color: #303030
+}
+
+.link{
+	color: #ffffff;
+	text-decoration: none;
+}
+
+.excelin{
+	
+}
+
+.excelout{
+	
+}
+
+.graph {
+	width: 200px; /* width and height are arbitrary, just make sure the #bar styles are changed accordingly */
+	height: 30px;
+	border: 1px solid #888; 
+	background: rgb(38,38,38);
+	background: -moz-linear-gradient(top, rgba(38,38,38,1) 0%, rgba(38,38,38,1) 23%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(38,38,38,1)), color-stop(23%,rgba(38,38,38,1)));
+	background: -webkit-linear-gradient(top, rgba(38,38,38,1) 0%,rgba(38,38,38,1) 23%);
+	background: -o-linear-gradient(top, rgba(38,38,38,1) 0%,rgba(38,38,38,1) 23%);
+	background: -ms-linear-gradient(top, rgba(38,38,38,1) 0%,rgba(38,38,38,1) 23%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#a8a8a8", endColorstr="#cccccc",GradientType=0 );
+	background: linear-gradient(top, rgba(38,38,38,1) 0%,rgba(38,38,38,1) 23%);
+	position: relative;
+	-webkit-border-radius: 5;
+	-moz-border-radius: 5;
+	border-radius: 5px;
+}
+
+#bar {
+	height: 30px; /* Not 30px because the 1px top-border brings it up to 30px to match #graph */
+	background: rgb(255,0,0); 
+	background: -moz-linear-gradient(top, rgba(255,0,0,1) 0%, rgba(255,0,0,1) 100%); 
+	background: -o-linear-gradient(top, rgba(255,0,0,1) 0%,rgba(255,0,0,1) 100%); 
+	background: -ms-linear-gradient(top, rgba(255,0,0,1) 0%,rgba(255,0,0,1) 100%); 
+	background: linear-gradient(top, rgba(255,0,0,1) 0%,rgba(255,0,0,1) 100%); 
+	/*border-top: 1px solid #000000;*/
+	-webkit-border-radius: 5;
+	-moz-border-radius: 5;
+	border-radius: 5px;
+}
+#bar p { position: absolute; text-align: center; width: 100%; margin: 0; line-height: 30px; }
+.error {
+	/* These styles are arbitrary */
+	background-color: #000000;
+	padding: 1em;
+	font-weight: bold;
+	color: red;
+	border: 1px solid red;
+}
+#bar2 {
+	height: 30px; /* Not 30px because the 1px top-border brings it up to 30px to match #graph */
+	background: rgb(0,255,0); 
+	background: -moz-linear-gradient(top, rgba(0,255,0,1) 0%, rgba(0,255,0,1) 100%); 
+	background: -o-linear-gradient(top, rgba(0,255,0,1) 0%,rgba(0,255,0,1) 100%); 
+	background: -ms-linear-gradient(top, rgba(0,255,0,1) 0%,rgba(0,255,0,1) 100%); 
+	background: linear-gradient(top, rgba(0,255,0,1) 0%,rgba(0,255,0,1) 100%); 
+	/*border-top: 1px solid #000000;*/
+	-webkit-border-radius: 5;
+	-moz-border-radius: 5;
+	border-radius: 5px;
+}	
+#bar2 p { position: absolute; text-align: center; width: 100%; margin: 0; line-height: 30px; }
+.error {
+	/* These styles are arbitrary */
+	background-color: #000000;
+	padding: 1em;
+	font-weight: bold;
+	color: red;
+	border: 1px solid red;
+}
+
+.progresstabsli{
+	display: inline;
+}
+	
+.dashgraph {
+	width: 200px; /* width and height are arbitrary, just make sure the #bar styles are changed accordingly */
+	height: 30px;
+	border: 1px solid #888; 
+	background: rgb(255,255,255);
+	background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 23%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(23%,rgba(255,255,255,1)));
+	background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(255,255,255,1) 23%);
+	background: -o-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(255,255,255,1) 23%);
+	background: -ms-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(255,255,255,1) 23%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#a8a8a8", endColorstr="#cccccc",GradientType=0 );
+	background: linear-gradient(top, rgba(255,255,255,1) 0%,rgba(255,255,255,1) 23%);
+	position: relative;
+	-webkit-border-radius: 5;
+	-moz-border-radius: 5;
+	border-radius: 5px;
+}
+/*
+93,155,155
+59,131,189
+62,95,138
+37,109,123
+3,2,195,190
+94,219,244
+*/
+#dashbar {
+	height: 30px; /* Not 30px because the 1px top-border brings it up to 30px to match #graph */
+	background: rgb(32,195,190); 
+	background: -moz-linear-gradient(top, rgba(32,195,190,1) 0%, rgba(32,195,190,1) 100%); 
+	background: -o-linear-gradient(top, rgba(32,195,190,1) 0%,rgba(32,195,190,1) 100%); 
+	background: -ms-linear-gradient(top, rgba(32,195,190,1) 0%,rgba(32,195,190,1) 100%); 
+	background: linear-gradient(top, rgba(32,195,190,1) 0%,rgba(32,195,190,1) 100%); 
+	/*border-top: 1px solid #000000;*/
+	-webkit-border-radius: 4;
+	-moz-border-radius: 4;
+	border-radius: 4px;
+}
+#dashbar p { position: absolute; text-align: center; width: 100%; margin: 0; line-height: 30px; color: #000000}
+.error {
+	/* These styles are arbitrary */
+	background-color: #000000;
+	padding: 1em;
+	font-weight: bold;
+	color: red;
+	border: 1px solid red;
+}
+#dashbar2 {
+	height: 30px; /* Not 30px because the 1px top-border brings it up to 30px to match #graph */
+	background: rgb(0,255,0); 
+	background: -moz-linear-gradient(top, rgba(0,255,0,1) 0%, rgba(0,255,0,1) 100%); 
+	background: -o-linear-gradient(top, rgba(0,255,0,1) 0%,rgba(0,255,0,1) 100%); 
+	background: -ms-linear-gradient(top, rgba(0,255,0,1) 0%,rgba(0,255,0,1) 100%); 
+	background: linear-gradient(top, rgba(0,255,0,1) 0%,rgba(0,255,0,1) 100%); 
+	/*border-top: 1px solid #000000;*/
+	-webkit-border-radius: 4;
+	-moz-border-radius: 4;
+	border-radius: 4px;
+}	
+#dashbar2 p { position: absolute; text-align: center; width: 100%; margin: 0; line-height: 30px; }
+.error {
+	/* These styles are arbitrary */
+	background-color: #000000;
+	padding: 1em;
+	font-weight: bold;
+	color: red;
+	border: 1px solid red;
+}
+	
+/* footer */
+#piep {
+	position: relative;
+	bottom: 0;
+	height: 55px;
+	width: 100%;
+	background-color: #f4f4f4;
+	background-image: url(../imgs/textura_cabezera.jpg);
+	background-repeat: repeat-x;
+}
+
+#piep p {
+	padding-top: 7px;
+	padding-left: 10px;
+	font: 11px "arial";
+	color: #fff;
+	text-align: center;
+}

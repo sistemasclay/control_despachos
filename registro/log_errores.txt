@@ -1,0 +1,8 @@
+FECHA: 2017-07-05 09:12:22. ERROR AL INICIAR MUESTREO: postgres7 error: [-1: ERROR:  error de sintaxis en o cerca de «,»
+LINE 1: ...duccion) values (2078902,11,'2017-07-05 09:12:22',1530,14,,)
+                                                                     ^] in EXECUTE("INSERT INTO cal_registros (id_producto,id_maquina,ts_registro,id_usuario,id_turno_muestreo,lote,orden_produccion) values (2078902,11,'2017-07-05 09:12:22',1530,14,,)")
+
+FECHA: 2017-07-17 09:16:18. ERROR AL INICIAR MUESTREO: postgres7 error: [-1: ERROR:  error de sintaxis en o cerca de «test»
+LINE 1: ...alues (2177354,10,'2017-07-17 09:16:18',9998,20,14test,16tes...
+                                                             ^] in EXECUTE("INSERT INTO cal_registros (id_producto,id_maquina,ts_registro,id_usuario,id_turno_muestreo,lote,orden_produccion) values (2177354,10,'2017-07-17 09:16:18',9998,20,14test,16test)")
+

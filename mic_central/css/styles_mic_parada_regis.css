@@ -1,0 +1,178 @@
+html,body {
+    height: 100%;
+    width: 100%;
+    background-color:black;
+    text-align: center;
+    margin:0;
+    padding:0;
+    font-family: Verdana, Helvetica;
+}
+.container {
+    float: left;
+    clear: left;
+    border: 1px solid;
+    width: 100%;
+    color:white;
+    text-align: center;
+    border-style: solid;
+    box-sizing:border-box
+}
+.text{
+    display: inline;
+    top: 35%;
+    position: relative;
+    font-size: 5vh;
+}
+.textDig{
+    display: inline;
+    top: 20%;
+    position: relative;
+}
+.textTitle{
+    display: inline;
+    top: 22%;
+    position: relative;
+}
+.textFotter{
+    display: inline;
+    top: 17%;
+    position: relative;
+	color: white;
+	font-size: 3vh;
+}
+.textFotter2 { 
+	font-size: 1.5vh;
+}
+.textFotter3 { 
+    color:red;
+	font-size: 1.5vh;
+}
+.title{ 
+    height:10%;
+    font-size: 4.5vh;
+}
+.maquina{
+    float: left;
+    padding-left: 2%
+}
+.turno{
+    float: right;
+    padding-right: 2%
+}
+.main{ 	
+    height:85%;
+}
+.footer{ 
+    height: 5%;
+    font-size: 3vh;
+}
+.Ctn1 {
+    height: 70%;
+    border-bottom: 0px;
+}
+.Ctn2 {
+    height: 30%;
+    border-bottom: 0px;
+    border-top: 0px;
+}
+.play {
+    position: relative;
+    margin:0 auto;
+    /*min-width: 200px;
+    min-height: 200px;*/
+    width: 60%;
+    height: 70%;
+    background-image: url("imagenes/stop1.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: auto 80%;
+	display: inline-block;
+}
+.playizqon {
+    position: relative;
+    margin:0 auto;
+    /*min-width: 200px;
+    min-height: 200px;*/
+    width: 20%;
+    height: 70%;
+    background-image: url("imagenes/mecanico_on.png");
+    background-repeat: no-repeat;
+    background-position: left top;
+    background-size: auto 25%;
+	display: inline-block;
+}
+.playizqoff{
+    position: relative;
+    margin:0 auto;
+    /*min-width: 200px;
+    min-height: 200px;*/
+    width: 20%;
+    height: 70%;
+    background-image: url("imagenes/mecanico_off.png");
+    background-repeat: no-repeat;
+    background-position: left top;
+    background-size: auto 25%;
+	display: inline-block;
+}
+.playder {
+    position: relative;
+    margin:0 auto;
+    /*min-width: 200px;
+    min-height: 200px;*/
+    width: 10%;
+    height: 70%;
+    /*background-image: url("imagenes/play1.png");*/
+    background-repeat: no-repeat;
+    background-position: right top;
+    background-size: auto 20%;
+	display: inline-block;
+}
+.img1{
+    width: 20%;
+    height: 100%;
+    display: inline-block;
+    background-image: url("imagenes/home2.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: auto 50%;
+    float: left; 
+
+}
+.img2{
+    width: 20%;
+    height: 100%;
+    display: inline-block;
+    background-image: url("imagenes/salir5.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: auto 50%;
+	float: right;    
+}
+.ctnImg{
+    position: relative;
+    width: 100%;
+    height: 30%;
+}
+.time{
+    height: 30%;
+    font-size: 6vh;
+}
+.inBlank{
+    margin: 0 auto;
+    height: 70%; 
+    width: 80%;
+    border: 1px;
+    border-style: solid;
+    box-sizing:border-box;
+    font-size: 5vh;
+	color: white;
+}
+.inBlank > span{
+	color:red;
+	top: 15%;
+	position: relative;
+}
+.link{
+	text-decoration: none;
+}
+body[data-loading=on]:before {content:'Cargando...';color:#fff;position:fixed;top:0;left:0;right:0;bottom:0;background:#000;opacity:.7;text-align:center;padding:50px;;z-index:9999;}

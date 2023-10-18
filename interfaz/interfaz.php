@@ -1,0 +1,327 @@
+<?
+session_start();
+include("clases/interfaz_clase.php");
+date_default_timezone_set("America/Lima");
+
+//datos_generacion
+$fechaHoraGeneracion= date('Y-m-d H:i:s', time());
+$fechaGeneracion=date('m/d/Y',strtotime($fechaHoraGeneracion));
+$horaGeneracion=date('H:i:s',strtotime($fechaHoraGeneracion));
+//datos interfaz
+if(!$_POST[fecha])
+$fechaHoraActual= date('Y-m-d H:i:s', time());
+else
+$fechaHoraActual=$_POST[fecha];
+
+//$fechaHoraActual="2012-03-27 17:36:05";
+$fechaActual=date('m/d/Y',strtotime($fechaHoraActual." - 1 day"));
+$interfazCtr = new interfaz_clase();
+//trae los turnos del dia anterior en un vector
+$turnos= $interfazCtr->traer_turnos($fechaHoraActual);
+$Cturnos=count($turnos);
+$arraysalida= array();
+$filassalida=0;
+//recorre los turno
+	for($i=0;$i<$Cturnos;$i++)
+	{
+		$unidadesReg=0;
+		//trae los operarios ya con el translapo
+		$operarios= $interfazCtr->traer_operarios_turno($turnos[$i]["id_turno"],$turnos[$i]["id_proceso"],$turnos[$i]["fecha_inicio"],$turnos[$i]["fecha_fin"]);
+		$Coperarios=count($operarios);		
+	//	echo "TURNO=".$turnos[$i]["id_turno"]." MQ=".$turnos[$i]["id_proceso"]." FI=".$turnos[$i]["fecha_inicio"]." FF=".$turnos[$i]["fecha_fin"]."</br>";		
+		
+	/*	for($j=0;$j<$Coperarios;$j++)
+		{
+			echo "OPERARIO=".$operarios[$j]["id_empleado"]."|"."TRAS=".$operarios[$j]["traslapo"]."</br>";
+			}				*/			
+		$fechaInicioReg=$turnos[$i]["fecha_inicio"];
+		$paradas= $interfazCtr->traer_paradas_turno($turnos[$i]["id_turno"],$turnos[$i]["id_proceso"],$fechaHoraActual);
+		$Cparadas=count($paradas);		
+		//si hay paradas en el turno
+		if($Cparadas>0)
+		{
+			//primer parada diferente a 00:00:00?
+			if(!$interfazCtr->probar0($paradas[0]["fecha_inicio"]))
+			{		//el dia no inicio en paro
+					for($k=0;$k<$Coperarios;$k++)//operarios
+					{
+					$fechaFinReg=$paradas[0]["fecha_inicio"];	
+					$unidadesReg=$paradas[0]["unidades"];
+					$arraysalida[$filassalida][0]=$turnos[$i]["orden_produccion"];
+					$arraysalida[$filassalida][1]="consecutivo_op";
+					$arraysalida[$filassalida][2]="TP1";
+					$arraysalida[$filassalida][3]=$turnos[$i]["nombre"];
+					$arraysalida[$filassalida][4]=$fechaActual;
+					$arraysalida[$filassalida][5]=$turnos[$i]["dato_extra"];
+					$arraysalida[$filassalida][6]=date('H:i',strtotime($fechaInicioReg));//$hiniciot;
+					$arraysalida[$filassalida][7]=date('H:i',strtotime($fechaFinReg));//$hfint;
+					$arraysalida[$filassalida][8]=number_format(((strtotime(date('H:i',strtotime($fechaFinReg)))-strtotime(date('H:i',strtotime($fechaInicioReg))))/3600), 4, '.', '');//number_format(((strtotime($hfint)-strtotime($hiniciot))/3600), 4, '.', '');
+					$arraysalida[$filassalida][9]="0";
+					$arraysalida[$filassalida][10]="S";
+					$arraysalida[$filassalida][11]=$operarios[$k][traslapo];;
+					$arraysalida[$filassalida][12]="0";
+					$arraysalida[$filassalida][13]="0";
+					$arraysalida[$filassalida][14]=$unidadesReg;
+					$arraysalida[$filassalida][15]="0";
+					$arraysalida[$filassalida][16]=$operarios[$k][id_empleado];
+					$arraysalida[$filassalida][17]=$fechaGeneracion;
+					$arraysalida[$filassalida][18]=$horaGeneracion;
+					$arraysalida[$filassalida][19]=$_SESSION[nombre];
+					$arraysalida[$filassalida][20]=$turnos[$i]["produccion_final"];
+					$filassalida++;
+						}//fin ciclo opererios
+				}			
+
+					//recorre las paradas
+				$numParadas=1;
+				for($j=0;$j<$Cparadas;$j++)
+				{
+			//		echo "parada=".$paradas[$j]["id_parada"]." FI=".$paradas[$j]["fecha_inicio"]." FF=".$paradas[$j]["fecha_fin"]." Unidades=".$paradas[$j]["unidades"]."</br>";
+					for($k=0;$k<$Coperarios;$k++)//operarios
+					{
+					$fechaInicioReg=$paradas[$j]["fecha_inicio"];
+					$fechaFinReg=$paradas[$j]["fecha_fin"];	
+					$arraysalida[$filassalida][0]=$turnos[$i]["orden_produccion"];
+					$arraysalida[$filassalida][1]="consecutivo_op";
+					$arraysalida[$filassalida][2]=$paradas[$j]["id_parada"];
+					$arraysalida[$filassalida][3]=$paradas[$j]["nombre"];
+					$arraysalida[$filassalida][4]=$fechaActual;
+					$arraysalida[$filassalida][5]=$turnos[$i]["dato_extra"];
+					$arraysalida[$filassalida][6]=date('H:i',strtotime($fechaInicioReg));//$hiniciot;
+					$arraysalida[$filassalida][7]=date('H:i',strtotime($fechaFinReg));//$hfint;
+					$arraysalida[$filassalida][8]=number_format(((strtotime(date('H:i',strtotime($fechaFinReg)))-strtotime(date('H:i',strtotime($fechaInicioReg))))/3600), 4, '.', '');//number_format(((strtotime($hfint)-strtotime($hiniciot))/3600), 4, '.', '');
+					$arraysalida[$filassalida][9]="0";
+					//si la paradas es planeada = 2
+						if($paradas[$j]["tipo_parada"]=="1")
+						{
+							$arraysalida[$filassalida][10]="S";
+						}
+					else
+					{
+						$arraysalida[$filassalida][10]="N";
+						}
+					$arraysalida[$filassalida][11]=$operarios[$k][traslapo];
+					$arraysalida[$filassalida][12]="0";
+					$arraysalida[$filassalida][13]="0";
+					$arraysalida[$filassalida][14]="0";
+					$arraysalida[$filassalida][15]="0";
+					$arraysalida[$filassalida][16]=$operarios[$k][id_empleado];
+					$arraysalida[$filassalida][17]=$fechaGeneracion;
+					$arraysalida[$filassalida][18]=$horaGeneracion;
+					$arraysalida[$filassalida][19]=$_SESSION[nombre];
+					$arraysalida[$filassalida][20]=$turnos[$i]["produccion_final"];
+					$filassalida++;
+					}//fin operarios
+					//no es la ultima parada del turno??-
+					//se genera tp1
+					if(($j+1)!=$Cparadas)
+					{
+						$fechaInicioReg=$fechaFinReg;
+						$fechaFinReg=$paradas[$j+1]["fecha_inicio"];	
+						$unidadesReg=$paradas[$j+1]["unidades"]-$paradas[$j]["unidades"];
+						if((((strtotime($fechaFinReg)-strtotime($fechaInicioReg))/3600)>=0)&&($unidadesReg>0))
+						{
+					for($k=0;$k<$Coperarios;$k++)//operarios
+					{
+						$arraysalida[$filassalida][0]=$turnos[$i]["orden_produccion"];
+						$arraysalida[$filassalida][1]="consecutivo_op";
+						$arraysalida[$filassalida][2]="TP1";
+						$arraysalida[$filassalida][3]=$turnos[$i]["nombre"];
+						$arraysalida[$filassalida][4]=$fechaActual;
+						$arraysalida[$filassalida][5]=$turnos[$i]["dato_extra"];
+						$arraysalida[$filassalida][6]=date('H:i',strtotime($fechaInicioReg));//$hiniciot;
+						$arraysalida[$filassalida][7]=date('H:i',strtotime($fechaFinReg));//$hfint;
+						$arraysalida[$filassalida][8]=number_format(((strtotime(date('H:i',strtotime($fechaFinReg)))-strtotime(date('H:i',strtotime($fechaInicioReg))))/3600), 4, '.', '');//number_format(((strtotime($hfint)-strtotime($hiniciot))/3600), 4, '.', '');
+						$arraysalida[$filassalida][9]="0";
+						$arraysalida[$filassalida][10]="S";
+						$arraysalida[$filassalida][11]=$operarios[$k][traslapo];;
+						$arraysalida[$filassalida][12]="0";
+						$arraysalida[$filassalida][13]="0";
+						$arraysalida[$filassalida][14]=$unidadesReg;
+						$arraysalida[$filassalida][15]="0";
+						$arraysalida[$filassalida][16]=$operarios[$k][id_empleado];
+						$arraysalida[$filassalida][17]=$fechaGeneracion;
+						$arraysalida[$filassalida][18]=$horaGeneracion;
+						$arraysalida[$filassalida][19]=$_SESSION[nombre];
+						$arraysalida[$filassalida][20]=$turnos[$i]["produccion_final"];
+						$filassalida++;	
+					}//fin operarios
+							}//fin tiempo mayor a 0
+						}//fin si no ultima parada
+						else//si era la ultima calcula tiempo fianl
+						{
+								$fechaInicioReg=$paradas[$j]["fecha_fin"];
+								$fechaFinReg=$turnos[$i]["fecha_fin"];	
+								$unidadesReg=$turnos[$i]["unidades_conteo"]-$paradas[$j]["unidades"];
+								if((((strtotime($fechaFinReg)-strtotime($fechaInicioReg))/3600)>=0)&&($unidadesReg>0))
+								{
+					for($k=0;$k<$Coperarios;$k++)//operarios
+					{
+								$arraysalida[$filassalida][0]=$turnos[$i]["orden_produccion"];
+								$arraysalida[$filassalida][1]="consecutivo_op";
+								$arraysalida[$filassalida][2]="TP1";
+								$arraysalida[$filassalida][3]=$turnos[$i]["nombre"];
+								$arraysalida[$filassalida][4]=$fechaActual;
+								$arraysalida[$filassalida][5]=$turnos[$i]["dato_extra"];
+								$arraysalida[$filassalida][6]=date('H:i',strtotime($fechaInicioReg));//$hiniciot;
+								$arraysalida[$filassalida][7]=date('H:i',strtotime($fechaFinReg));//$hfint;
+								$arraysalida[$filassalida][8]=number_format(((strtotime(date('H:i',strtotime($fechaFinReg)))-strtotime(date('H:i',strtotime($fechaInicioReg))))/3600), 4, '.', '');//number_format(((strtotime($hfint)-strtotime($hiniciot))/3600), 4, '.', '');
+								$arraysalida[$filassalida][9]="0";
+								$arraysalida[$filassalida][10]="S";
+								$arraysalida[$filassalida][11]=$operarios[$k][traslapo];;
+								$arraysalida[$filassalida][12]="0";
+								$arraysalida[$filassalida][13]="0";
+								$arraysalida[$filassalida][14]=$unidadesReg;
+								$arraysalida[$filassalida][15]="0";
+								$arraysalida[$filassalida][16]=$operarios[$k][id_empleado];
+								$arraysalida[$filassalida][17]=$fechaGeneracion;
+								$arraysalida[$filassalida][18]=$horaGeneracion;
+								$arraysalida[$filassalida][19]=$_SESSION[nombre];
+								$arraysalida[$filassalida][20]=$turnos[$i]["produccion_final"];
+								$filassalida++;		
+					}//fin operarios
+									}//fin tiempo mayor a 0
+							}
+
+					}	//fin for paradas					
+			}
+		else//si no hay paradas en el turno
+		{
+				$fechaFinReg=$turnos[$i]["fecha_fin"];	
+					$unidadesReg=$turnos[$i]["unidades_conteo"];
+					for($k=0;$k<$Coperarios;$k++)//operarios
+					{
+					$arraysalida[$filassalida][0]=$turnos[$i]["orden_produccion"];
+					$arraysalida[$filassalida][1]="consecutivo_op";
+					$arraysalida[$filassalida][2]="TP1";
+					$arraysalida[$filassalida][3]=$turnos[$i]["nombre"];
+					$arraysalida[$filassalida][4]=$fechaActual;
+					$arraysalida[$filassalida][5]=$turnos[$i]["dato_extra"];
+					$arraysalida[$filassalida][6]=date('H:i',strtotime($fechaInicioReg));//$hiniciot;
+					$arraysalida[$filassalida][7]=date('H:i',strtotime($fechaFinReg));//$hfint;
+					$arraysalida[$filassalida][8]=number_format(((strtotime(date('H:i',strtotime($fechaFinReg)))-strtotime(date('H:i',strtotime($fechaInicioReg))))/3600), 4, '.', '');//number_format(((strtotime($hfint)-strtotime($hiniciot))/3600), 4, '.', '');
+					$arraysalida[$filassalida][9]="0";
+					$arraysalida[$filassalida][10]="S";
+					$arraysalida[$filassalida][11]=$operarios[$k][traslapo];;
+					$arraysalida[$filassalida][12]="0";
+					$arraysalida[$filassalida][13]="0";
+					$arraysalida[$filassalida][14]=$unidadesReg;
+					$arraysalida[$filassalida][15]="0";
+					$arraysalida[$filassalida][16]=$operarios[$k][id_empleado];
+					$arraysalida[$filassalida][17]=$fechaGeneracion;
+					$arraysalida[$filassalida][18]=$horaGeneracion;
+					$arraysalida[$filassalida][19]=$_SESSION[nombre];
+					$arraysalida[$filassalida][20]=$turnos[$i]["produccion_final"];
+					$filassalida++;
+					}//fin operarios
+			}
+			
+		}
+		
+		$c=0;
+		$iop=2;
+		//autonumerico ops
+		for($c=0;$c<count($arraysalida);$c++)
+		{
+				$arraysalida[$c][1]=$iop;		
+				
+				if($arraysalida[$c][0]==$arraysalida[$c+1][0])
+				$iop++;
+				else
+				$iop=2;
+		}
+		
+		$salida="";
+		$c=0;
+		for($c=0;$c<count($arraysalida);$c++)
+		{
+			$cj=0;
+			$salida=$salida."\r\nRE|";
+			for($cj=0;$cj<21;$cj++)
+			{
+				$salida=$salida.$arraysalida[$c][$cj]."|";
+			}
+		//print_r($arraysalida[$c]);	
+		//echo "<br/>";
+		//$salida=$salida."\r\n";
+		}
+$dat=	date('Y-m-d',strtotime($fechaHoraActual));
+
+if (file_exists("INTERFAZ_".$dat.".txt"))
+{
+   unlink("INTERFAZ_".$dat.".txt");
+}
+$archivo = fopen ("INTERFAZ_".$dat.".txt", "a+");//escribe al final del archivo
+fwrite($archivo, $salida);
+fclose($archivo);
+
+?>
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" type="text/css"  href="../estilos/myc_gral.css"/>
+  <link type="text/css" rel="stylesheet" href="calendario/dhtmlgoodies_calendar/dhtmlgoodies_calendar.css?random=20051112" media="screen"></link>
+	<script type="text/javascript" src="calendario/dhtmlgoodies_calendar/dhtmlgoodies_calendar.js?random=20060118"></script>
+
+  <title>Monitoreo y Control</title>
+</head>
+
+<body>
+<div id="contenedor">
+  <?php require_once('C:\\AppServ\www\mic\includes\cabecera.php'); ?>
+  <div id="contenido">
+  	<h1>INTERFASE IBES <? echo date("Y/m/d H:i:s",strtotime($fechaHoraActual));  ?></h1>
+<table align="center" width="100%">
+<tr>
+<td align="center">
+<form class="forma" action="interfaz.php"  method="POST" name="parametros">
+    <input class="ctxt" type="text" readonly="readonly" name="fecha" id="fecha" onclick="displayCalendar(document.forms[0].fecha,'yyyy/mm/dd',this)" value="<? echo date("Y/m/d",strtotime($fechaHoraActual));  ?>"/>
+<input class="btn"  type="submit" value="Generar"/>
+</form>
+    </td>
+</tr>
+</table>
+<br/>
+
+<table align="center" width="100%">
+<tr>
+<td align="center">
+<a href="<? echo "INTERFAZ_".$dat.".txt"; ?>" target="_blank"><img alt="GUARDAR ARCHIVO" height="50" width="50" src="../imagenes/save.png"></a>
+</td>
+</tr>
+</table>
+
+
+<br/>
+<h1>DATOS CONTENIDOS</h1>
+<?
+
+$color=array('impar','par');
+$c_estilo=0;
+echo "<table class=\"tinfo\" width=\"100%\" align=\"center\" border=\"1\">";
+
+		for($c=0;$c<count($arraysalida);$c++)
+		{
+			if($c_estilo%2!=0)
+                    echo '<tr class="'.$color[0].'">';
+            else
+                    echo '<tr class="'.$color[1].'">';
+					
+			$cj=0;
+			for($cj=0;$cj<21;$cj++)
+			{
+				echo "<td>".$arraysalida[$c][$cj]."</td>";
+			}
+			echo "</tr>";
+			$c_estilo++;
+		}
+echo "</table>";
+?>
+</div>
+  <?php require_once('C:\\AppServ\www\mic\includes\piep.php'); ?>
+</div>
+</body>
+</html>

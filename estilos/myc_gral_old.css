@@ -1,0 +1,248 @@
+@charset "utf-8";
+/* jm - eiso */
+
+* {
+	outline: none;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background-color: #fff;
+}
+
+h1 {
+	font: bold 16px "arial";
+	color: #333;
+	text-align: center;
+	margin-bottom: 15px;
+}
+
+#contenedor {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+}
+
+/* header */
+#cabecera {
+	height: 120px;
+	width: 100%;
+	background-image: url(../imgs/bg_cabecera.jpg);
+}
+
+#logo {
+	position: relative;
+	float:left;
+	top: 15px;
+	left: 10px;
+	height: 95px;
+	width: 250px;
+	background-image: url(../imgs/logo.png);
+	background-repeat: no-repeat;
+       
+}
+
+#menuppal {
+	position: relative;
+	float: left;
+	top: 15px;
+	width: 861px;
+	/*width: 660px;*/
+}
+
+#menuppal ul li {
+	float: left;
+	margin-right: 10px;
+	list-style: none;
+	text-align: center;
+}
+
+#menuppal ul li a:link, #menuppal ul li a:visited {
+	height: 75px;
+	width: 70px;
+	padding-top: 15px;
+	display: block;
+	font: 11px "arial";
+	color: #3f3f3f;
+	line-height: 12px;
+	text-decoration: none;
+	text-align: center;
+	vertical-align: text-top;
+}
+
+#menuppal ul li a:hover {
+	color: #c00;
+}
+
+#menuppal ul li a img {
+	margin-bottom: 5px;
+	border: 0;
+}
+
+#lder {
+	position: relative;
+	float: right;
+	right: 10px;
+}
+
+#salir {
+	position: relative;
+	top: 10px;
+	text-align: center;
+}
+
+#salir img {
+	position: relative;
+}
+
+#salir a:link, #salir a:visited {
+	text-decoration: none;
+	font: 11px "arial";
+	color: #3f3f3f;
+}
+
+#salir a:hover {
+	color: #c00;
+}
+
+#salir a img {
+	border: 0;
+}
+
+#nomapp {
+	position: relative;
+	top: 30px;
+	font: 11px "arial";
+	color: #000;
+	text-align: center;
+}
+
+/* contenido */
+#contenido {
+	position: relative;
+	width: 80%;
+	margin: 30px auto;
+	min-height: 520px;
+	height: auto !important;
+
+}
+
+/* contenido */
+#contenido1 {
+	position: relative;
+	width: 100%;
+	margin: 30px auto;
+	min-height: 520px;
+	height: auto !important;
+
+}
+
+
+/* tabla datos */
+.tinfo {
+	position: relative;
+	margin: 0 auto;
+	border: 1px solid #999;
+}
+
+.tinfo th {
+	padding: 7px 5px 7px 5px;
+	text-align: center;
+	font: bold 11px "arial";
+	color: #fff;
+	text-transform: uppercase;
+	background-color: #999;
+}
+
+.tinfo td {
+	height: 25px;
+	padding-left: 5px;
+	padding-right: 5px;
+	font: 11px "tahoma";
+	color: #333;
+	text-align: center;
+}
+
+.par {
+	background-color: #f2f2f2;
+}
+
+.impar {
+	background-color: #e1e1e1;
+}
+
+/* formulario */
+.forma {
+}
+
+.tforma {
+	position: relative;
+	margin: 0 auto;
+	padding: 20px 40px 20px 40px;
+	border: 1px solid #999;
+}
+
+.tforma tr {
+	height: 35px;
+}
+
+.tforma .etq {
+	width: 90px;
+	font: bold 13px "arial";
+	color: #333;
+}
+
+.tforma .ctxt {
+	height: 18px;
+	width: 200px;
+	padding: 2px 2px 0 2px;
+	font: 13px "verdana";
+	color: #333;
+}
+
+.tforma .ctxt {
+	height: 18px;
+	width: 200px;
+	padding: 2px 2px 0 2px;
+	font: 13px "verdana";
+	color: #333;
+}
+
+.tforma .lista {
+	height: 20px;
+	font: 13px "verdana";
+	color: #333;
+}
+
+.tforma .oplista {
+	font: 13px "verdana";
+	color: #333;
+}
+
+.tforma .btn {
+	margin-left: 10px;
+	padding-left: 7px;
+	padding-right: 7px;
+	font: 13px "tahoma";
+	color: #333;
+}
+
+/* footer */
+#piep {
+	position: relative;
+	bottom: 0;
+	height: 55px;
+	width: 100%;
+	background-color: #f4f4f4;
+	background-image: url(../imgs/bg_pie.jpg);
+	background-repeat: repeat-x;
+}
+
+#piep p {
+	padding-top: 7px;
+	padding-left: 10px;
+	font: 11px "arial";
+	color: #3f3f3f;
+	text-align: center;
+}

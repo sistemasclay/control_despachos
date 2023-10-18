@@ -1,0 +1,762 @@
+<?php
+
+/*
+ * Description of configuracion_aplicacion
+ * esta clase esta asociada a las configuracion de la informacion del
+ * sistema.
+ */
+      include("adodb5/adodb-exceptions.inc.php");
+
+      include("adodb5/adodb.inc.php");
+class configuracion_aplicacion {
+
+    //funciones para el usuarios
+
+    function listar_usuarios()
+    {
+        include("conexion.php");
+        $sql =	"SELECT * FROM usuarios WHERE estado_usuario = 1 ORDER BY id_usuario";
+       $result=$conexion_pg->Execute($sql);
+	if ($result === false)
+            {
+            echo 'error al listar: '.$conexion_pg->ErrorMsg().'<BR>';
+            }
+         $conexion_pg->Close();
+         return $result;
+    }
+
+	function registro_usuario($codigo,$nombre,$password,$estado)
+    {
+        if($estado=="on")
+        {
+            $estado=1;
+        }
+        else
+        {
+            $estado=0;
+        }
+        include("conexion.php");
+        $sql = "INSERT INTO usuarios(id_usuario,nombre_usuario,pass_usuario,estado_usuario)VALUES($codigo,'$nombre','$password',$estado)";
+        if ($conexion_pg->Execute($sql) === false) {
+        echo 'error al insertar: '.$conexion_pg->ErrorMsg().'<BR>';
+        }
+        $conexion_pg->Close();
+    }
+	
+    function comprobar_usuario($codigo)
+    {
+		include("conexion.php");
+		$sql =	"SELECT * FROM usuarios WHERE id_usuario=$codigo";
+		$result=$conexion_pg->Execute($sql);
+		if ($result === false)
+		{
+			echo 'error al comprobar: '.$conexion_pg->ErrorMsg().'<BR>';
+		}
+		$conexion_pg->Close();
+		$resultado=$result->fields["id_usuario"];
+		$result->MoveNext();
+		$result->Close();
+		if ($resultado)
+		{				// Es que  existe
+			return true;
+		}
+		else
+		{				// Es que no existe
+			return false;
+		}
+    }
+
+    function actualizar_usuario($codigo,$nombre,$password,$estado)
+    {
+		if($estado=="on")
+        {
+            $estado=1;
+        }
+        else
+        {
+            $estado=0;
+        }
+        include("conexion.php");
+        $sql = "UPDATE usuarios SET nombre_usuario='$nombre',pass_usuario='$password',estado_usuario=$estado WHERE id_usuario=$codigo";
+        if ($conexion_pg->Execute($sql) === false) {
+        echo 'error al actulizar: '.$conexion_pg->ErrorMsg().'<BR>';
+        }
+        $conexion_pg->Close();
+    }
+	
+	function detalle_usuario($codigo)
+    {
+        include("conexion.php");
+        $sql="SELECT * FROM usuarios WHERE id_usuario = $codigo";
+        $result=$conexion_pg->Execute($sql);
+        if ($result === false)
+            {
+            echo 'error al Buscar: '.$conexion_pg->ErrorMsg().'<BR>';
+            }
+         $conexion_pg->Close();
+         return $result;
+    }
+
+	function borrar_usuario($codigo)
+    {
+        include("conexion.php");
+        $sql="UPDATE usuarios SET estado_usuario=0 WHERE id_usuario = $codigo";
+        if ($conexion_pg->Execute($sql) === false) {
+			echo 'error al borrar: '.$conexion_pg->ErrorMsg().'<BR>';
+        }
+        $conexion_pg->Close();
+    }
+    function borrar_producto($codigo)
+    {
+        include("conexion.php");
+         $sql="DELETE FROM productos WHERE id_producto='$codigo'";
+
+        if ($conexion_pg->Execute($sql) === false) {
+			echo 'error al borrar: '.$conexion_pg->ErrorMsg().'<BR>';
+        }
+        $conexion_pg->Close();
+    }
+	
+	//funciones para los productos
+
+    function listar_productos()
+    {
+		include("conexion.php");
+		$sql =	"SELECT * FROM productos ORDER BY id_producto";
+		$result=$conexion_pg->Execute($sql);
+		if($result === false)
+		{
+			echo 'error al listar: '.$conexion_pg->ErrorMsg().'<BR>';
+		}
+		$conexion_pg->Close();
+		return $result;
+    }
+	
+	function comprobar_producto($codigo)
+    {
+		include("conexion.php");
+		$sql =	"SELECT * FROM productos WHERE id_producto='$codigo'";
+		$result=$conexion_pg->Execute($sql);
+		if ($result === false)
+		{
+			echo 'error al comprobar: '.$conexion_pg->ErrorMsg().'<BR>';
+		}
+		$conexion_pg->Close();
+		$resultado=$result->fields["id_producto"];
+		$result->MoveNext();
+		$result->Close();
+		if ($resultado)
+		{				// Es que  existe
+			return true;
+		}
+		else
+		{				// Es que no existe
+			return false;
+		}
+    }
+
+	function registro_producto($codigo,$nombre,$barras,$final,$cant_final)
+    {
+       
+        include("conexion.php");
+        $sql = "INSERT INTO productos(id_producto,nombre_producto,codigo_barras,codigo_final,cant_empaque_final)VALUES('$codigo','$nombre','$barras','$final',$cant_final)";
+        if ($conexion_pg->Execute($sql) === false) {
+        echo 'error al insertar: '.$conexion_pg->ErrorMsg().'<BR>';
+        }
+        $conexion_pg->Close();
+    }
+
+	function actualizar_producto($codigo,$nombre,$barras,$final,$cant_final)
+    {
+		
+        include("conexion.php");
+        $sql = "UPDATE productos SET nombre_producto='$nombre',codigo_barras='$barras', codigo_final='$final', cant_empaque_final=$cant_final WHERE id_producto='$codigo'";
+        if ($conexion_pg->Execute($sql) === false) {
+			echo 'error al actulizar: '.$conexion_pg->ErrorMsg().'<BR>';
+        }
+        $conexion_pg->Close();
+
+    }
+	
+
+	function detalle_producto_id($codigo)
+    {
+        include("conexion.php");
+        $sql="SELECT * FROM productos WHERE id_producto = '$codigo'";
+        $result=$conexion_pg->Execute($sql);
+        if ($result === false)
+            {
+            echo 'error al Buscar: '.$conexion_pg->ErrorMsg().'<BR>';
+            }
+         $conexion_pg->Close();
+         return $result;
+    }
+	
+	function detalle_producto_barras($codigo,$remision)
+    {
+		//ESTE SELECT BUSCA TODA LA INFORMACIÓN DEL PRODUCTO, USANDO EL CODIGO DE BARRAS QUE SE LE HA ENTREGADO.
+		//ADEMÁS, PUEDE DIFERENCIAR ENTRE EL CODIGO DEL EMPAQUE PRIMARIO "codigo_barras" O EL DEL EMPAQUE FINAL "codigo_final"
+		//SI EL CODIGO QUE SE LE ENTREGÓ ES EL DEL EMPAQUE PRIMARIO RETORNA 1, SINO RETORNA 2
+        include("conexion.php");
+        $sql=	"SELECT	*, 
+						CASE WHEN p.codigo_barras = '$codigo' THEN 1 ELSE 2 END tipo_codigo
+				FROM productos p
+					INNER JOIN remision_solicitud rs ON rs.id_producto = p.id_producto AND rs.id_remision = '$remision'
+				WHERE p.codigo_barras = '$codigo' OR p.codigo_final = '$codigo'";
+        $result=$conexion_pg->Execute($sql);
+        if ($result === false)
+            {
+            echo 'error al Buscar: '.$conexion_pg->ErrorMsg().'<BR>';
+            }
+         $conexion_pg->Close();
+         return $result;
+    }
+	
+	//TRAE LA INFORMACIÓN DEL PRODUCTO CON EL CODIGO DE BARRAS ENTREGADO SOLO A NIVEL DE CONSULTA
+	function consultar_producto_barras($codigo)
+    {
+		//ESTE SELECT BUSCA TODA LA INFORMACIÓN DEL PRODUCTO, USANDO EL CODIGO DE BARRAS QUE SE LE HA ENTREGADO.
+		//ADEMÁS, PUEDE DIFERENCIAR ENTRE EL CODIGO DEL EMPAQUE PRIMARIO "codigo_barras" O EL DEL EMPAQUE FINAL "codigo_final"
+		//SI EL CODIGO QUE SE LE ENTREGÓ ES EL DEL EMPAQUE PRIMARIO RETORNA 1, SINO RETORNA 2
+        include("conexion.php");
+        $sql=	"SELECT	*, 
+						CASE WHEN p.codigo_barras = '$codigo' THEN 1 ELSE 2 END tipo_codigo
+				FROM productos p
+				WHERE p.codigo_barras = '$codigo' OR p.codigo_final = '$codigo'";
+        $result=$conexion_pg->Execute($sql);
+        if ($result === false)
+            {
+            echo 'error al Buscar: '.$conexion_pg->ErrorMsg().'<BR>';
+            }
+         $conexion_pg->Close();
+         return $result;
+    }
+	
+	//funciones para los lotes
+
+	function listar_lotes()
+	{
+		include("conexion.php");
+		$sql =	"SELECT * FROM lotes ORDER BY id_lote";
+		$result=$conexion_pg->Execute($sql);
+		if ($result === false)
+		{
+			echo 'error al listar: '.$conexion_pg->ErrorMsg().'<BR>';
+		}
+		$conexion_pg->Close();
+		return $result;
+	}
+	
+	function listar_lotes_activos()
+	{
+		include("conexion.php");
+		$sql =	"SELECT * FROM lotes WHERE cantidad > 0 ORDER BY id_lote";
+		$result=$conexion_pg->Execute($sql);
+		if ($result === false)
+		{
+			echo 'error al listar: '.$conexion_pg->ErrorMsg().'<BR>';
+		}
+		$conexion_pg->Close();
+		return $result;
+	}
+
+	function registro_lote($id_lote,$id_producto,$fecha_fabricacion,$fecha_vencimiento)
+    {
+        include("conexion.php");
+        $sql = "INSERT INTO usuarios(id_usuario,nombre_usuario,pass_usuario,estado_usuario)VALUES($codigo,'$nombre','$password',$estado)";
+        if ($conexion_pg->Execute($sql) === false) {
+        echo 'error al insertar: '.$conexion_pg->ErrorMsg().'<BR>';
+        }
+        $conexion_pg->Close();
+    }
+	
+	//ESTE METODO DEBE CUMPLIR 3 FUNCIONES
+	//1. DETERMINAR SI EL LOTE SE ENCUENTRA EN LA BASE DE DATOS.
+	//2. DETERMINAR SI EL LOTE PERTENECE AL ITEM QUE SE LE ASIGNÓ
+	//3. DETERMINAR SI EL LOTE TIENE UNIDADES REGISTRADAS EN SU INVENTARIO
+    function comprobar_lote($lote, $producto)
+    {
+		include("conexion.php");
+		$sql =	"SELECT * FROM lotes WHERE id_lote='$lote' AND id_producto='$producto' AND cantidad > 0";
+		$result=$conexion_pg->Execute($sql);
+		if ($result === false)
+		{
+			echo 'error al comprobar: '.$conexion_pg->ErrorMsg().'<BR>';
+		}
+		$conexion_pg->Close();
+		$resultado=$result->fields["id_usuario"];
+		$result->MoveNext();
+		$result->Close();
+		if ($resultado)
+		{				// Es que  existe
+			return true;
+		}
+		else
+		{				// Es que no existe
+			return false;
+		}
+    }
+	function cambiar_lote($id_remision,$nuevo_lote,$producto)
+	{
+		include("conexion.php");
+        $sql = "UPDATE remision_solicitud SET lote_producto='$nuevo_lote' WHERE id_remision='$id_remision' AND id_producto='$producto' ";
+        if ($conexion_pg->Execute($sql) === false) {
+        echo 'error al actulizar: '.$conexion_pg->ErrorMsg().'<BR>';
+        }
+        $conexion_pg->Close();
+	}
+    function actualizar_lote($lote,$producto,$cantidad)
+    {
+        include("conexion.php");
+        $sql = "UPDATE lotes SET cantidad=$cantidad WHERE id_lote='$lote' AND id_producto='$producto'";
+        if ($conexion_pg->Execute($sql) === false) {
+        echo 'error al actulizar: '.$conexion_pg->ErrorMsg().'<BR>';
+        }
+        $conexion_pg->Close();
+    }
+	
+	function detalle_lote($lote, $producto)
+    {
+        include("conexion.php");
+        $sql="SELECT * FROM lotes WHERE id_lote='$lote' AND id_producto='$producto'";
+        $result=$conexion_pg->Execute($sql);
+        if ($result === false)
+            {
+            echo 'error al Buscar: '.$conexion_pg->ErrorMsg().'<BR>';
+            }
+         $conexion_pg->Close();
+         return $result;
+    }
+
+	function borrar_lote($lote,$producto)
+    {
+        include("conexion.php");
+        $sql="DELETE FROM lotes WHERE id_lote='$lote' AND id_producto='$producto'";
+        if ($conexion_pg->Execute($sql) === false) {
+			echo 'error al borrar: '.$conexion_pg->ErrorMsg().'<BR>';
+        }
+        $conexion_pg->Close();
+    }
+	
+	
+	
+	//despacho
+	
+	function listar_despachos()
+    {
+		include("conexion.php");
+		$sql =	"SELECT * FROM despachos ORDER BY id_despacho desc";
+		$result=$conexion_pg->Execute($sql);
+		if($result === false)
+		{
+			echo 'error al listar: '.$conexion_pg->ErrorMsg().'<BR>';
+		}
+		$conexion_pg->Close();
+		return $result;
+    }
+	
+	function listar_despachos_fechas_nuevo($fechai, $fechaf)
+    {
+		include("conexion.php");
+		// $sql =	"SELECT * FROM despachos WHERE (fecha_despacho BETWEEN '$fechai' AND '$fechaf') ORDER BY id_despacho desc";
+
+		$sql= "SELECT t1.*, t2.* FROM despachos as t1 INNER JOIN remisiones_despacho as t2 ON  t1.id_despacho = t2.id_despacho
+		WHERE (t1.fecha_despacho BETWEEN '$fechai' AND '$fechaf') AND t2.estado= 1 AND t2.fecha_fin is not null ORDER BY t1.id_despacho desc";
+
+
+		$result=$conexion_pg->Execute($sql);
+		if($result === false)
+		{
+			echo 'error al listar: '.$conexion_pg->ErrorMsg().'<BR>';
+		}
+		$conexion_pg->Close();
+		return $result;
+    }
+	function listar_despachos_fechas($fechai, $fechaf)
+    {
+		include("conexion.php");
+		$sql =	"SELECT * FROM despachos WHERE (fecha_despacho BETWEEN '$fechai' AND '$fechaf') ORDER BY id_despacho desc";
+
+		// $sql= "SELECT t1.*, t2.* FROM despachos as t1 INNER JOIN remisiones_despacho as t2 ON  t1.id_despacho = t2.id_despacho
+		// WHERE (t1.fecha_despacho BETWEEN '$fechai' AND '$fechaf') AND t2.estado= 1 ORDER BY t1.id_despacho desc";
+
+
+		$result=$conexion_pg->Execute($sql);
+		if($result === false)
+		{
+			echo 'error al listar: '.$conexion_pg->ErrorMsg().'<BR>';
+		}
+		$conexion_pg->Close();
+		return $result;
+    }
+	
+	function comprobar_despacho($codigo)
+    {
+		include("conexion.php");
+		$sql =	"SELECT * FROM despachos WHERE id_despacho=$codigo";
+		$result=$conexion_pg->Execute($sql);
+		if ($result === false)
+		{
+			echo 'error al comprobar: '.$conexion_pg->ErrorMsg().'<BR>';
+		}
+		$conexion_pg->Close();
+		$resultado=$result->fields["id_despacho"];
+		$result->MoveNext();
+		$result->Close();
+		if ($resultado)
+		{				// Es que  existe
+			return true;
+		}
+		else
+		{				// Es que no existe
+			return false;
+		}
+    }
+
+	function registro_despacho($usuario)
+    {
+		$fecha = date("Y-m-d H:i:s");
+		include("conexion.php");
+		$sql = "INSERT INTO despachos(fecha_despacho,despachador)VALUES('$fecha',$usuario)";
+		if ($conexion_pg->Execute($sql) === false) {
+			echo 'error al insertar: '.$conexion_pg->ErrorMsg().'<BR>';
+		}
+		$conexion_pg->Close();
+    }
+	
+	function traer_ultimo_despacho(){
+		include("conexion.php");
+		$sql =	"SELECT max(id_despacho) id_despacho FROM despachos ";
+		$result=$conexion_pg->Execute($sql);
+		if($result === false)
+		{
+			echo 'error al listar: '.$conexion_pg->ErrorMsg().'<BR>';
+		}
+		$conexion_pg->Close();
+		$resultado=$result->fields["id_despacho"];
+		$result->MoveNext();
+		$result->Close();		
+		return $resultado;
+	}
+
+	//FUNCIONES PARA LAS REMISIONES
+
+    function listar_remision_solicitud()
+    {
+		include("conexion.php");
+		$sql =	"SELECT * FROM remision_solicitud ORDER BY id_remision";
+		$result=$conexion_pg->Execute($sql);
+		if($result === false)
+		{
+			echo 'error al listar: '.$conexion_pg->ErrorMsg().'<BR>';
+		}
+		$conexion_pg->Close();
+		return $result;
+    }
+	
+	//COMPURUEBA SI LA REMISION YA FUE FINALIZADA, SI LA REMISION ESTA FINALIZADA ENTONCES EL CAMPO "estado" DE LA TABLA "remisiones_despacho" RETORNA 1
+	function comprobar_remision_terminada($codigo)
+    {
+		include("conexion.php");
+		$sql =	"SELECT id_remision, MAX(estado) estado FROM remisiones_despacho WHERE id_remision='$codigo' GROUP BY id_remision";
+		$result=$conexion_pg->Execute($sql);
+		if ($result === false)
+		{
+			echo 'error al comprobar: '.$conexion_pg->ErrorMsg().'<BR>';
+		}
+		$conexion_pg->Close();
+		$resultado=$result->fields["estado"];
+		$result->MoveNext();
+		$result->Close();
+		if ($resultado == 1)
+		{				// Es que  existe
+			return true;
+		}
+		else
+		{				// Es que no existe
+			return false;
+		}
+    }
+	
+	//COMPRUEBA QUE EL PRODUCTO SI PERTENECE AL DESPACHO QUE SE ESTA INTENTANDO INGRESAR
+	function comprobar_remision_solicitud($codigo, $producto)
+    {
+		include("conexion.php");
+		$sql =	"SELECT * FROM remision_solicitud WHERE id_remision='$codigo' AND id_producto = '$producto'";
+		$result=$conexion_pg->Execute($sql);
+		if ($result === false)
+		{
+			echo 'error al comprobar: '.$conexion_pg->ErrorMsg().'<BR>';
+		}
+		$conexion_pg->Close();
+		$resultado=$result->fields["id_remision"];
+		$result->MoveNext();
+		$result->Close();
+		if ($resultado)
+		{				// Es que  existe
+			return true;
+		}
+		else
+		{				// Es que no existe
+			return false;
+		}
+    }
+
+	function registro_remision_solicitud($codigo,$id_producto,$cantidad,$lote)
+    {
+		include("conexion.php");
+		$sql = "INSERT INTO remision_solicitud(id_remision,id_producto,cantidad_despachar,lote_producto)VALUES('$codigo','$id_producto',$cantidad,'$lote')";
+		if ($conexion_pg->Execute($sql) === false) {
+			echo 'error al insertar: '.$conexion_pg->ErrorMsg().'<BR>';
+		}
+		$conexion_pg->Close();
+    }
+
+	function actualizar_remision_solicitud($codigo,$id_producto,$cantidad,$lote)
+    {
+        include("conexion.php");
+        $sql = "UPDATE remision_solicitud SET cantidad_despachar=$cantidad, lote_producto='$lote' WHERE id_remision = '$codigo' AND id_producto='$id_producto'";
+        if ($conexion_pg->Execute($sql) === false) {
+			echo 'error al actulizar: '.$conexion_pg->ErrorMsg().'<BR>';
+        }
+        $conexion_pg->Close();
+	}
+
+	function detalle_remision_solicitud($codigo)
+    {
+        include("conexion.php");
+        $sql="	SELECT rem.id_producto p_pedido,
+					max(rem.cantidad_despachar) cantidad_despachar,
+					max(CASE WHEN rem.id_producto = rr.id_producto THEN rr.id_producto ELSE '' END) p_despachar,
+					sum(CASE WHEN rem.id_producto = rr.id_producto THEN rr.cantidad_despachada ELSE 0 END) cantidad_despachada,
+					rem.lote_producto,
+					rem.id_producto
+				FROM remision_solicitud rem
+					LEFT JOIN remision_real rr ON rr.id_remision = rem.id_remision AND rem.id_producto = rr.id_producto
+				WHERE rem.id_remision = '$codigo'
+				GROUP BY rem.id_producto,rem.lote_producto";
+        $result=$conexion_pg->Execute($sql);
+        if ($result === false)
+            {
+            echo 'error al Buscar: '.$conexion_pg->ErrorMsg().'<BR>';
+            }
+         $conexion_pg->Close();
+         return $result;
+    }
+	
+	function comprobar_remision_despacho($id_despacho, $id_remision){
+		include("conexion.php");
+		$sql =	"SELECT * FROM remisiones_despacho WHERE id_despacho=$id_despacho AND id_remision = '$id_remision'";
+		$result=$conexion_pg->Execute($sql);
+		if ($result === false)
+		{
+			echo 'error al comprobar: '.$conexion_pg->ErrorMsg().'<BR>';
+		}
+		$conexion_pg->Close();
+		$resultado=$result->fields["id_remision"];
+		$result->MoveNext();
+		$result->Close();
+		if ($resultado)
+		{				// Es que  existe
+			return true;
+		}
+		else
+		{				// Es que no existe
+			return false;
+		}
+	}
+	
+	function asignar_remision_a_despacho($id_despacho, $id_remision, $cliente){
+		include("conexion.php");
+		$sql = "INSERT INTO remisiones_despacho(id_despacho,id_remision, nombre_cliente)VALUES($id_despacho, '$id_remision', '$cliente')";
+		if ($conexion_pg->Execute($sql) === false) {
+			echo 'error al insertar: '.$conexion_pg->ErrorMsg().'<BR>';
+		}
+		$conexion_pg->Close();
+	}
+	function consultar_remisiones_despacho_historico(){
+		include("conexion.php");
+        $sql="SELECT *
+				FROM remisiones_despacho
+				WHERE id_despacho > 2700 and estado = 1";
+        $result=$conexion_pg->Execute($sql);
+        if ($result === false)
+            {
+            echo 'error al Buscar: '.$conexion_pg->ErrorMsg().'<BR>';
+            }
+         $conexion_pg->Close();
+         return $result;
+	}
+	function consultar_remisiones_despacho($id_despacho){
+		include("conexion.php");
+        $sql="	SELECT *
+				FROM remisiones_despacho
+				WHERE id_despacho = $id_despacho";
+        $result=$conexion_pg->Execute($sql);
+        if ($result === false)
+            {
+            echo 'error al Buscar: '.$conexion_pg->ErrorMsg().'<BR>';
+            }
+         $conexion_pg->Close();
+         return $result;
+	}
+	
+	/*
+	*COMPRUEBA SI EL PRODUCTO YA SE INGRESO A LA REMISION Y SI SE PASÓ O NO DE LA CANTIDAD INDICADA
+	*/
+	function comprobar_producto_remision_salida($remision, $producto){
+		include("conexion.php");
+		$sql =	"SELECT * FROM remision_real WHERE id_remision='$remision' AND id_producto = '$producto'";
+		$result=$conexion_pg->Execute($sql);
+		if ($result === false)
+		{
+			echo 'error al comprobar: '.$conexion_pg->ErrorMsg().'<BR>';
+		}
+		$conexion_pg->Close();
+		$resultado=$result->fields["id_producto"];
+		$result->MoveNext();
+		$result->Close();
+		if ($resultado)
+		{				// Es que  existe
+			return true;
+		}
+		else
+		{				// Es que no existe
+			return false;
+		}
+	}
+	
+	function sumar_a_producto_remision($remision, $producto, $cantidad){
+		include("conexion.php");
+        $sql = "UPDATE remision_real SET cantidad_despachada = cantidad_despachada + $cantidad WHERE id_remision = '$remision' AND id_producto='$producto'";
+        if ($conexion_pg->Execute($sql) === false) {
+			echo 'error al actulizar: '.$conexion_pg->ErrorMsg().'<BR>';
+        }
+        $conexion_pg->Close();
+	}
+	
+	function restar_a_producto_remision($remision, $producto, $cantidad){
+		include("conexion.php");
+        $sql = "UPDATE remision_real SET cantidad_despachada = cantidad_despachada - $cantidad WHERE id_remision = '$remision' AND id_producto='$producto'";
+        if ($conexion_pg->Execute($sql) === false) {
+			echo 'error al actulizar: '.$conexion_pg->ErrorMsg().'<BR>';
+        }
+        $conexion_pg->Close();
+	}
+	
+	function registro_producto_remision($remision,$producto,$cantidad)
+    {
+		include("conexion.php");
+		$sql = "INSERT INTO remision_real(id_remision, id_producto, cantidad_despachada)VALUES('$remision','$producto',$cantidad)";
+		if ($conexion_pg->Execute($sql) === false) {
+			echo 'error al insertar: '.$conexion_pg->ErrorMsg().'<BR>';
+		}
+		$conexion_pg->Close();
+    }
+	
+	function verificar_remision($remision){
+		//variable que representa si se encontró un error, ya sea que hay unidades faltantes o de más
+		$error = 0;
+		$detalle_remision = $this->detalle_remision_solicitud($remision);
+		while (!$detalle_remision->EOF) {
+			//se verifica si la cantidad que se esta depachando es distinta de la solicitada
+			//en caso de que esto sea correcto entonces significa que hay un error en el despacho
+			if($detalle_remision->fields["cantidad_despachar"]>$detalle_remision->fields["cantidad_despachada"]){
+				$error = 1;
+				break;
+			}
+			if($detalle_remision->fields["cantidad_despachar"]<$detalle_remision->fields["cantidad_despachada"]){
+				$error = 2;
+				break;
+			}
+			$detalle_remision->MoveNext();
+		}
+		if(!$error){
+			$this->cerrar_remision($remision);
+		}
+		
+		return $error;
+	}
+	
+	function cerrar_remision($remision){
+		include("conexion.php");
+        $sql = "UPDATE remisiones_despacho SET estado = 1 WHERE id_remision = '$remision'";
+        if ($conexion_pg->Execute($sql) === false) {
+			echo 'error al actulizar: '.$conexion_pg->ErrorMsg().'<BR>';
+        }
+        $conexion_pg->Close();
+	}
+	
+	function consultar_despachador($id_despacho){
+		include("conexion.php");
+		$sql="SELECT * FROM despachos WHERE id_despacho = $id_despacho";
+		$result=$conexion_pg->Execute($sql);
+		if ($result === false)
+			{
+			echo 'error al Buscar: '.$conexion_pg->ErrorMsg().'<BR>';
+			}
+		$conexion_pg->Close();
+		return $result->fields["despachador"];
+	}
+	
+	//METODO QUE COMPRUEBA SI ESTA REMISION YA SE HABÍA DADO POR INICIADA, RETORNA true SI LA REMISION YA ESTABA TERMINADA, false EN CASO CONTRARIO
+	function comprobar_inicio_remision($remision,$despacho){
+		include("conexion.php");
+		$sql="SELECT * FROM remisiones_despacho WHERE id_remision = '$remision' AND id_despacho = $despacho";
+		$result=$conexion_pg->Execute($sql);
+		if ($result === false)
+		{
+			echo 'error al Buscar: '.$conexion_pg->ErrorMsg().'<BR>';
+		}
+		$conexion_pg->Close();
+		if($result->fields["fecha_inicio"]){
+			return true;
+		}
+		else{
+			return false;
+		}
+		
+	}
+	
+	//METODO QUE COMPRUEBA SI ESTA REMISION YA SE HABÍA DADO POR TERMINADA, RETORNA true SI LA REMISION YA ESTABA TERMINADA, false EN CASO CONTRARIO
+	function comprobar_fin_remision($remision,$despacho){
+		include("conexion.php");
+		$sql="SELECT * FROM remisiones_despacho WHERE id_remision = '$remision' AND id_despacho = $despacho";
+		$result=$conexion_pg->Execute($sql);
+		if ($result === false)
+		{
+			echo 'error al Buscar: '.$conexion_pg->ErrorMsg().'<BR>';
+		}
+		$conexion_pg->Close();
+		if($result->fields["fecha_fin"]){
+			return true;
+		}
+		else{
+			return false;
+		}
+		
+	}
+	
+	function asignar_inicio_remision($remision,$despacho){
+		$fecha = date("Y-m-d H:i:s");
+		include("conexion.php");
+        $sql = "UPDATE remisiones_despacho SET fecha_inicio = '$fecha' WHERE id_remision = '$remision' AND id_despacho = $despacho";
+        if ($conexion_pg->Execute($sql) === false) {
+			echo 'error al actulizar: '.$conexion_pg->ErrorMsg().'<BR>';
+        }
+        $conexion_pg->Close();
+	}
+	
+	function asignar_fin_remision($remision,$despacho){
+		$fecha = date("Y-m-d H:i:s");
+		include("conexion.php");
+        $sql = "UPDATE remisiones_despacho SET fecha_fin = '$fecha' WHERE id_remision = '$remision' AND id_despacho = $despacho";
+        if ($conexion_pg->Execute($sql) === false) {
+			echo 'error al actulizar: '.$conexion_pg->ErrorMsg().'<BR>';
+        }
+        $conexion_pg->Close();
+	}
+
+}
+?>
+

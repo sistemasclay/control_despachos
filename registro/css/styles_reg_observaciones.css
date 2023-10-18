@@ -1,0 +1,172 @@
+html,body {
+    height: 100%;
+    width: 100%;
+    background-color:black;
+    text-align: center;
+    margin:0;
+    padding:0;
+    font-family: Verdana, Helvetica;
+	color: white;
+}
+/*ESPACIOS PRINCIPALES*/
+.logos{
+	height:9%;
+    width:100%;
+	display:inline-block;
+	color:white;
+}
+.titulos{
+	height:8%;
+    width:100%;
+	display:inline-block;
+	color:white;
+}
+.info{
+	height:74%;
+    width:100%;
+	display:inline-block;
+	color:white;
+	overflow-X: auto;
+	overflow-Y: auto;
+}
+.piep{
+	height:5%;
+    width:100%;
+	display:inline-block;
+	color:white;
+}
+.linea_divisora{
+	height:0.33%;
+	background-color:#404040;
+	color:#404040;
+	font-size: 0.1vh;
+}
+/*FIN ESPACIOS PRINCIPALES*/
+/*MISCELANEOS IMPORTANTES*/
+.text{
+    display: inline;
+    position: relative;
+    font-size: 4vh;
+}
+.link{
+	color: #ffffff;
+	text-decoration: none;
+}
+/*FIN MISCELANEOS IMPORTANTES*/
+
+/*ESPACIOS SECUNDARIOS*/
+/*LOGOS*/
+.logo1{
+	width: 60%;
+    height: 100%;
+    display: inline-block;
+    background-image: url("imagenes/logo_calidad.png");
+    background-repeat: no-repeat;
+    background-position: left;
+    background-size: auto 90%;
+}
+.logo2{
+	width: 40%;
+    height: 100%;
+    display: inline-block;
+    /*background-image: url("imagenes/logo_oee.png");*/
+    background-image: url("imagenes/cuadro.png");
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: auto 75%;
+}
+/*FIN LOGOS*/
+/*TITULOS*/
+.tabla_titulos{
+	width: 100%; 
+	height: 100%;
+	position: relative;
+	margin: 0 auto;
+}
+.boton {
+	width: 80%; 
+	background-color:#161616;
+	border-radius: 1%;
+	/*padding: 0% 0% 0% 15%;*/
+}
+.espacio_blanco{
+	color: #000;
+	width: 10%;
+}
+/*FIN TITULOS*/
+/*INFO*/
+table {
+    border-collapse: collapse;
+}
+.par {
+	background-color: #161616;
+}
+
+.impar {
+	background-color: #000000;
+}
+.tabla_info{
+	height: 100%; 
+	width: 100%; 
+	position: relative;
+	margin: 0 auto;
+}
+.tabla_info td {
+	height: 25px;
+	font-family: Calibri, Helvetica, sans-serif;
+	font-size: 5vh;
+	font-weight: normal;
+	color: #FFF;
+	text-align: center;
+	
+}
+.blank1{
+	width: 5%;
+}
+.blank2{
+	width: 10%;
+}
+.btn1{
+	width: 40%;
+	background-color: #15a61a;
+}
+.estado{
+	width: 10%;
+	border: 1px solid #404040;
+}
+.proceso{
+	width: 20%;
+	border: 1px solid #404040;
+}
+.cerrar{
+	width: 10%;
+	border-top: 1px solid #404040;
+	border-bottom: 1px solid #404040;
+}
+.obs{
+	font-size: 3vh;
+	font-family: calibri;
+}
+/*FIN INFO*/
+/*PIEP*/
+.piep1{
+	/*padding: 0% 0% 0% 15%;*/
+	width: 50%;
+    height: 100%;
+    display: inline-block;
+    background-image: url("imagenes/logo_mantenimiento.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: auto 90%;
+}
+.piep2{
+	/*padding: 0% 0% 0% 15%;*/
+	width: 50%;
+    height: 100%;
+    display: inline-block;
+    background-image: url("imagenes/logo_manufactura.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: auto 90%;
+}
+/*FIN PIEP*/

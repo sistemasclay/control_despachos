@@ -1,0 +1,103 @@
+<?php
+/* 
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ * Description of teimpo real
+ * esta clase esta asociada a la informacion del dash board de las maquinas del
+ * sistema.
+ * @author Juan Pablo salazar
+ */
+include("adodb5/adodb-exceptions.inc.php");
+include("adodb5/adodb.inc.php");
+
+class tiempo_real {
+
+            function listar_etiquetas()
+    {
+        include("conexion.php");
+       // $sql =	"SELECT * FROM ordenes_produccion";
+       $sql = "SELECT * FROM variables order by id_variable";
+       $result=$conexion_pg->Execute($sql);
+	if ($result === false)
+            {
+            echo 'error al listar: '.$conexion_pg->ErrorMsg().'<BR>';
+            }
+            $conexion_pg->Close();
+            $i=0;
+        while (!$result->EOF)
+	{
+			$ar[$i]["etiqueta"]=$result->fields["etiqueta"];
+			$result->MoveNext();
+			$i++;
+	}
+         return $ar;
+    }
+
+    //funciones para las plantas
+    function listar_turnos()
+    {
+        include("conexion.php");
+        $sql =	"SELECT t.*,p.nombre FROM turnos as t,procesos as p WHERE t.id_proceso=p.id_proceso and terminado='0' order by id_proceso";
+       $result=$conexion_pg->Execute($sql);
+	if ($result === false)
+            {
+            echo 'error al listar: '.$conexion_pg->ErrorMsg().'<BR>';
+            }
+         $conexion_pg->Close();
+         return $result;
+    }
+
+        function traer_parada_turno($id_turno,$id_proceso) //la actual
+    {
+        include("conexion.php");
+ // $"SELECT * FROM producto_proceso as b INNER JOIN procesos as a ON (b.id_proceso= a.id_proceso) WHERE id_producto='$producto'";
+        $sql =	"SELECT * FROM turno_parada as b INNER JOIN paradas as a ON (b.id_parada= a.id_parada) WHERE terminado='0' AND id_turno='$id_turno' AND id_proceso='$id_proceso'";
+       $result=$conexion_pg->Execute($sql);
+	if ($result === false)
+            {
+            echo 'error al listar: '.$conexion_pg->ErrorMsg().'<BR>';
+            }
+         $conexion_pg->Close();
+         return $result;
+    }
+
+    function traer_paradas_turno($id_turno,$id_proceso)
+    {
+        include("conexion.php");
+        $sql =	"SELECT * FROM turno_parada WHERE  id_turno='$id_turno' AND id_proceso='$id_proceso'";
+       $result=$conexion_pg->Execute($sql);
+	if ($result === false)
+            {
+            echo 'error al listar: '.$conexion_pg->ErrorMsg().'<BR>';
+            }
+         $conexion_pg->Close();
+         return $result;
+    }
+
+ function tiempo_segundos($segundos){
+    $minutos=$segundos/60;
+    $horas=floor($minutos/60);
+    $minutos2=$minutos%60;
+    $segundos_2=$segundos%60%60%60;
+    if($minutos2<10)$minutos2='0'.$minutos2;
+    if($segundos_2<10)$segundos_2='0'.$segundos_2;
+
+    if($segundos<60){ /* segundos */
+    $resultado= '00:00:'.round($segundos);
+     /*  if($segundos<10)
+       {$resultado=$resultado.'0';}*/
+    }elseif($segundos>60 && $segundos<3600){/* minutos */
+    $resultado= '00:'.$minutos2.':'.$segundos_2;
+    }else{/* horas */
+        if($horas<10){$horas='0'.$horas;}
+    $resultado= $horas.":".$minutos2.":".$segundos_2;
+    }
+    return $resultado;
+}
+
+}
+?>
+
